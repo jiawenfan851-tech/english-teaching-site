@@ -3,19 +3,824 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bright English Studio | 中小学英语辅导</title>
+    <title>Bright English Studio | 中小学英语成长课程</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css" />
+    <style>
+:root {
+  --ink: #172033;
+  --muted: #637083;
+  --paper: #fbfaf6;
+  --line: #e7e0d5;
+  --teal: #0f766e;
+  --teal-dark: #0b4f4a;
+  --coral: #df6b57;
+  --gold: #e9b44c;
+  --blue: #285f9f;
+  --white: #ffffff;
+  --shadow: 0 18px 55px rgba(23, 32, 51, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: "Noto Sans SC", system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  min-height: 76px;
+  padding: 14px clamp(18px, 4vw, 56px);
+  border-bottom: 1px solid rgba(231, 224, 213, 0.72);
+  background: rgba(251, 250, 246, 0.94);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 210px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--white);
+  background: var(--teal);
+  font: 800 21px/1 "Plus Jakarta Sans", sans-serif;
+}
+
+.brand strong,
+.brand small {
+  display: block;
+}
+
+.brand strong {
+  font: 800 16px/1.1 "Plus Jakarta Sans", sans-serif;
+}
+
+.brand small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 36px);
+  color: #354154;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.nav a {
+  padding: 8px 0;
+}
+
+.nav-action,
+.primary-btn,
+.secondary-btn,
+.footer-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.nav-action,
+.primary-btn {
+  color: var(--white);
+  background: var(--teal);
+  border: 1px solid var(--teal);
+  cursor: pointer;
+}
+
+.secondary-btn {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.hero {
+  position: relative;
+  min-height: calc(100vh - 76px);
+  max-height: 790px;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(18, 28, 44, 0.78) 0%, rgba(18, 28, 44, 0.44) 48%, rgba(18, 28, 44, 0.08) 100%),
+    linear-gradient(180deg, rgba(18, 28, 44, 0.02) 72%, var(--paper) 100%);
+}
+
+.hero-content {
+  position: relative;
+  width: min(690px, calc(100% - 36px));
+  margin-left: clamp(18px, 7vw, 96px);
+  padding-bottom: 44px;
+  color: var(--white);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--coral);
+  font: 800 12px/1.3 "Plus Jakarta Sans", sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.hero .eyebrow {
+  color: #ffd08a;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 680px;
+  margin-bottom: 22px;
+  font-size: clamp(42px, 6.2vw, 74px);
+  line-height: 1.06;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+
+h3 {
+  margin-bottom: 12px;
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.hero-copy {
+  max-width: 610px;
+  margin-bottom: 28px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.quick-panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  width: min(1040px, calc(100% - 36px));
+  margin: -46px auto 0;
+  position: relative;
+  z-index: 4;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--line);
+  box-shadow: var(--shadow);
+}
+
+.quick-panel article {
+  min-height: 108px;
+  padding: 24px;
+  background: var(--white);
+}
+
+.quick-panel strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--teal-dark);
+  font: 800 28px/1 "Plus Jakarta Sans", sans-serif;
+}
+
+.quick-panel span {
+  color: var(--muted);
+}
+
+.daily-section {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.daily-copy p,
+.vocab-section .section-head p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.quote-card {
+  min-height: 260px;
+  padding: clamp(26px, 4vw, 42px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.quote-card span {
+  color: var(--coral);
+  font: 800 13px/1 "Plus Jakarta Sans", sans-serif;
+  text-transform: uppercase;
+}
+
+.quote-card blockquote {
+  margin: 22px 0 18px;
+  color: var(--teal-dark);
+  font-family: "Plus Jakarta Sans", "Noto Sans SC", sans-serif;
+  font-size: clamp(26px, 3.4vw, 42px);
+  font-weight: 800;
+  line-height: 1.22;
+}
+
+.quote-card p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.section {
+  width: min(1120px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: clamp(72px, 9vw, 112px) 0 0;
+}
+
+.section-head {
+  max-width: 760px;
+  margin-bottom: 34px;
+}
+
+.level-grid,
+.why-grid,
+.dashboard-grid,
+.student-list {
+  display: grid;
+  gap: 18px;
+}
+
+.level-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.why-grid,
+.dashboard-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.level-card,
+.why-grid article,
+.contact-form,
+.dashboard-card,
+.teacher-panel,
+.student-list article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: 0 10px 28px rgba(23, 32, 51, 0.07);
+}
+
+.level-card {
+  min-height: 250px;
+  padding: 30px;
+}
+
+.level-card.primary {
+  border-top: 6px solid var(--gold);
+}
+
+.level-card.accent {
+  border-top: 6px solid var(--blue);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: var(--teal-dark);
+  background: #dff3ee;
+  font-weight: 800;
+}
+
+.level-card h3 {
+  margin-top: 24px;
+}
+
+.level-card p,
+.why-grid p,
+.contact-section p,
+.teacher-panel p,
+.dashboard-card p,
+.student-list p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.vocab-section {
+  scroll-margin-top: 92px;
+}
+
+.vocab-tool {
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: 0 10px 28px rgba(23, 32, 51, 0.07);
+}
+
+.vocab-toolbar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.vocab-tab {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: #405067;
+  background: #f8f6f0;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.vocab-tab.active {
+  border-color: var(--teal);
+  color: var(--white);
+  background: var(--teal);
+}
+
+.vocab-search {
+  margin-bottom: 18px;
+}
+
+.vocab-search span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.word-card {
+  min-height: 210px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffefb;
+}
+
+.word-card strong {
+  display: block;
+  color: var(--teal-dark);
+  font: 800 30px/1 "Plus Jakarta Sans", sans-serif;
+}
+
+.word-card .phonetic {
+  display: block;
+  margin-top: 8px;
+  color: var(--coral);
+  font-weight: 800;
+}
+
+.word-card p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.word-card em {
+  display: block;
+  margin-top: 14px;
+  color: #334155;
+  font-style: normal;
+  line-height: 1.65;
+}
+
+.word-empty {
+  grid-column: 1 / -1;
+  padding: 24px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.why-section {
+  width: 100%;
+  max-width: none;
+  margin-top: clamp(72px, 9vw, 112px);
+  padding: clamp(70px, 8vw, 98px) clamp(18px, 4vw, 56px);
+  background: #eef5f2;
+}
+
+.why-section .section-head,
+.why-grid {
+  width: min(1120px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.why-grid article {
+  min-height: 210px;
+  padding: 26px;
+}
+
+.why-grid span {
+  color: var(--coral);
+  font: 800 13px/1 "Plus Jakarta Sans", sans-serif;
+}
+
+.why-grid h3 {
+  margin-top: 20px;
+}
+
+.contact-section {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 30px;
+  align-items: start;
+  padding-bottom: clamp(72px, 9vw, 112px);
+}
+
+.contact-form {
+  display: grid;
+  gap: 16px;
+  padding: 26px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: #334155;
+  font-weight: 700;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 14px;
+  color: var(--ink);
+  background: #fffefb;
+}
+
+.form-honey {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-form .primary-btn,
+.login-form .primary-btn {
+  width: 100%;
+  border: 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 28px clamp(18px, 4vw, 56px);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.footer-login {
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--white);
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(23, 32, 51, 0.58);
+  backdrop-filter: blur(8px);
+}
+
+.login-dialog {
+  position: relative;
+  width: min(460px, 100%);
+  padding: 30px;
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.login-dialog h2 {
+  font-size: 32px;
+}
+
+.login-note {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.login-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.login-error {
+  min-height: 22px;
+  margin: -4px 0 0;
+  color: #b42318;
+  font-weight: 700;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffefb;
+  color: var(--ink);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.teacher-body {
+  background: #f4f7f5;
+}
+
+.teacher-shell {
+  width: min(1180px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: clamp(34px, 5vw, 58px) 0 clamp(60px, 8vw, 96px);
+}
+
+.teacher-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.teacher-hero h1 {
+  max-width: none;
+  margin-bottom: 10px;
+  color: var(--ink);
+  font-size: clamp(34px, 5vw, 56px);
+}
+
+.teacher-hero p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.dashboard-card {
+  min-height: 160px;
+  padding: 24px;
+}
+
+.dashboard-card span,
+.student-list span {
+  color: var(--coral);
+  font-weight: 800;
+}
+
+.dashboard-card strong {
+  display: block;
+  margin: 14px 0 10px;
+  color: var(--teal-dark);
+  font: 800 30px/1 "Plus Jakarta Sans", sans-serif;
+}
+
+.teacher-panel {
+  margin-top: 18px;
+  padding: 26px;
+}
+
+.teacher-panel h2 {
+  margin-bottom: 20px;
+  font-size: clamp(24px, 3vw, 34px);
+}
+
+.student-list {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.student-list article {
+  min-height: 154px;
+  padding: 22px;
+}
+
+.teacher-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.teacher-actions button,
+.logout-link {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--white);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.logout-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .topbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .level-grid,
+  .why-grid,
+  .dashboard-grid,
+  .student-list,
+  .daily-section,
+  .word-grid,
+  .contact-section {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    min-height: auto;
+  }
+
+  .nav-action {
+    min-height: 40px;
+  }
+
+  .hero {
+    min-height: 690px;
+  }
+
+  .hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(18, 28, 44, 0.8) 0%, rgba(18, 28, 44, 0.58) 58%, rgba(18, 28, 44, 0.12) 100%),
+      linear-gradient(180deg, rgba(18, 28, 44, 0.02) 72%, var(--paper) 100%);
+  }
+
+  .hero-content {
+    margin: 0 auto;
+    padding-top: 60px;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+
+  .quick-panel {
+    grid-template-columns: 1fr;
+    margin-top: -28px;
+  }
+
+  .quick-panel article {
+    min-height: 92px;
+  }
+
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .vocab-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .login-dialog,
+  .teacher-panel {
+    padding: 24px;
+  }
+}
+
+    </style>
   </head>
   <body>
     <header class="topbar">
       <a class="brand" href="#home" aria-label="Bright English Studio 首页">
         <span class="brand-mark">B</span>
-        <span><strong>Bright English</strong><small>中小学英语辅导</small></span>
+        <span>
+          <strong>Bright English</strong>
+          <small>中小学英语成长课程</small>
+        </span>
       </a>
-      <nav class="nav" aria-label="主导航"><a href="#courses">课程</a><a href="#why">优势</a><a href="#contact">预约</a></nav>
+      <nav class="nav" aria-label="主导航">
+        <a href="#courses">课程</a>
+        <a href="#daily">每日一句</a>
+        <a href="#vocabulary">初中词汇</a>
+        <a href="#why">方法</a>
+        <a href="#contact">预约</a>
+      </nav>
       <button class="nav-action" id="loginOpen" type="button">老师登录</button>
     </header>
 
@@ -25,54 +830,143 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
           <p class="eyebrow">小学 · 初中 · 高中</p>
-          <h1>英语补习，讲清楚，也练到位。</h1>
-          <p class="hero-copy">面向中小学生的英语辅导课程，围绕校内同步、语法阅读、写作提升和考试冲刺，帮助学生稳步提高。</p>
-          <div class="hero-actions"><a class="primary-btn" href="#contact">预约试听</a><a class="secondary-btn" href="#courses">查看课程</a></div>
+          <h1>让英语学习，成为清澈而有光的成长。</h1>
+          <p class="hero-copy">面向中小学生的英语成长课程，从词汇、语法、阅读到写作表达，循序渐进地建立语言能力，也陪孩子看见自己的进步。</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#contact">预约试听</a>
+            <a class="secondary-btn" href="#courses">查看课程</a>
+          </div>
         </div>
       </section>
 
       <section class="quick-panel" aria-label="课程概览">
         <article><strong>小学</strong><span>兴趣启蒙 · 自然拼读</span></article>
-        <article><strong>初中</strong><span>语法阅读 · 校内同步</span></article>
-        <article><strong>高中</strong><span>写作提升 · 考试冲刺</span></article>
+        <article><strong>初中</strong><span>词汇语法 · 阅读表达</span></article>
+        <article><strong>高中</strong><span>思维写作 · 考试素养</span></article>
+      </section>
+
+      <section id="daily" class="section daily-section">
+        <div class="daily-copy">
+          <p class="eyebrow">Daily Sentence</p>
+          <h2>每日一句</h2>
+          <p>每天打开网站，读一句优美英文。不是为了背很多，而是让语言慢慢进入生活。</p>
+        </div>
+        <article class="quote-card" aria-live="polite">
+          <span id="dailyDate">Today</span>
+          <blockquote id="dailyQuote">The beautiful thing about learning is that no one can take it away from you.</blockquote>
+          <p id="dailyAuthor">B. B. King</p>
+        </article>
       </section>
 
       <section id="courses" class="section">
-        <div class="section-head"><p class="eyebrow">Courses</p><h2>按学生阶段安排课程</h2></div>
+        <div class="section-head">
+          <p class="eyebrow">Courses</p>
+          <h2>按学生阶段，铺一条稳稳向上的路</h2>
+        </div>
         <div class="level-grid compact-grid">
-          <article class="level-card primary"><span class="tag">小学</span><h3>启蒙与基础</h3><p>自然拼读、常用词汇、基础句型和主题口语，让孩子敢开口、听得懂、读得顺。</p></article>
-          <article class="level-card"><span class="tag">初中</span><h3>同步与提分</h3><p>紧扣校内单元，梳理语法、阅读和写作方法，帮助学生把知识真正用出来。</p></article>
-          <article class="level-card accent"><span class="tag">高中</span><h3>能力与冲刺</h3><p>强化词汇、阅读理解、语法填空、应用文和读后续写，提升稳定得分能力。</p></article>
+          <article class="level-card primary">
+            <span class="tag">小学</span>
+            <h3>启蒙与语感</h3>
+            <p>从自然拼读、日常表达和绘本阅读开始，让孩子在声音、图像和故事里亲近英语。</p>
+          </article>
+          <article class="level-card">
+            <span class="tag">初中</span>
+            <h3>体系与表达</h3>
+            <p>以校内知识为线索，打通词汇、语法、阅读和写作，让学生不只会做题，也会表达。</p>
+          </article>
+          <article class="level-card accent">
+            <span class="tag">高中</span>
+            <h3>思维与远行</h3>
+            <p>在阅读深度、写作结构和考试策略中训练语言思维，为更高阶段的学习蓄力。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="vocabulary" class="section vocab-section">
+        <div class="section-head">
+          <p class="eyebrow">Junior Vocabulary</p>
+          <h2>初中词汇花园</h2>
+          <p>把单词放回句子和场景里学。每天认识一点、复现一点，词汇就会慢慢长成能力。</p>
+        </div>
+        <div class="vocab-tool">
+          <div class="vocab-toolbar" role="tablist" aria-label="词汇年级选择">
+            <button class="vocab-tab active" type="button" data-grade="grade7">七年级</button>
+            <button class="vocab-tab" type="button" data-grade="grade8">八年级</button>
+            <button class="vocab-tab" type="button" data-grade="grade9">九年级</button>
+          </div>
+          <label class="vocab-search">
+            <span>查找单词</span>
+            <input id="wordSearch" type="search" placeholder="输入英文或中文，如 courage / 勇气" />
+          </label>
+          <div class="word-grid" id="wordGrid" aria-live="polite"></div>
         </div>
       </section>
 
       <section id="why" class="section why-section">
-        <div class="section-head"><p class="eyebrow">Why Choose Us</p><h2>课程简单清楚，学习目标明确</h2></div>
+        <div class="section-head">
+          <p class="eyebrow">Learning Method</p>
+          <h2>温和而有章法，清楚也有耐心</h2>
+        </div>
         <div class="why-grid">
-          <article><span>01</span><h3>先诊断，再上课</h3><p>根据学生薄弱点安排内容，不盲目刷题。</p></article>
-          <article><span>02</span><h3>讲练结合</h3><p>课堂讲清方法，马上配套练习和反馈。</p></article>
-          <article><span>03</span><h3>家长可跟进</h3><p>课后说明学习重点、问题和下一步安排。</p></article>
+          <article>
+            <span>01</span>
+            <h3>先看见问题</h3>
+            <p>从词汇、语法、阅读和表达中找到卡点，再安排真正需要的练习。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>把方法讲明白</h3>
+            <p>不只给答案，更讲清为什么这样想、怎样迁移到下一道题。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>让进步可追踪</h3>
+            <p>课后梳理重点和下一步安排，让学生和家长都知道努力的方向。</p>
+          </article>
         </div>
       </section>
 
       <section id="contact" class="section contact-section">
-        <div><p class="eyebrow">Book a Trial</p><h2>预约试听或课程咨询</h2><p>提交后，学生姓名、微信号、学段和学习目标会发送到老师邮箱，老师会尽快联系你。</p></div>
+        <div>
+          <p class="eyebrow">Book a Trial</p>
+          <h2>预约一节试听课</h2>
+          <p>留下学生姓名、学段、学习目标和微信号，老师会根据情况沟通适合的学习安排。</p>
+        </div>
         <form class="contact-form" action="https://formsubmit.co/jiawenfan851@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="新的英语课程预约" />
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_next" value="https://jiawenfan851-tech.github.io/english-teaching-site/thanks.html" />
           <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" />
-          <label>学生姓名<input name="学生姓名" type="text" placeholder="请输入学生姓名" required /></label>
-          <label>学生学段<select name="学生学段" required><option value="小学">小学</option><option value="初中">初中</option><option value="高中">高中</option></select></label>
-          <label>学习目标<input name="学习目标" type="text" placeholder="例如：校内同步、阅读提升、中高考冲刺" required /></label>
-          <label>微信号<input name="微信号" type="text" placeholder="请输入学生或家长微信号" required /></label>
+          <label>
+            学生姓名
+            <input name="学生姓名" type="text" placeholder="请输入学生姓名" required />
+          </label>
+          <label>
+            学生学段
+            <select name="学生学段" required>
+              <option value="小学">小学</option>
+              <option value="初中">初中</option>
+              <option value="高中">高中</option>
+            </select>
+          </label>
+          <label>
+            学习目标
+            <input name="学习目标" type="text" placeholder="例如：校内同步、阅读提升、中高考冲刺" required />
+          </label>
+          <label>
+            微信号
+            <input name="微信号" type="text" placeholder="请输入学生或家长微信号" required />
+          </label>
           <button class="primary-btn" type="submit">提交预约</button>
         </form>
       </section>
     </main>
 
-    <footer class="footer"><span>Bright English Studio</span><button class="footer-login" id="footerLoginOpen" type="button">老师登录</button></footer>
+    <footer class="footer">
+      <span>Bright English Studio</span>
+      <button class="footer-login" id="footerLoginOpen" type="button">老师登录</button>
+    </footer>
 
     <div class="modal hidden" id="loginModal" aria-hidden="true">
       <div class="modal-backdrop" data-close-login></div>
@@ -82,14 +976,231 @@
         <h2 id="loginTitle">老师登录</h2>
         <p class="login-note">登录后进入教师管理界面。</p>
         <form id="loginForm" class="login-form">
-          <label>账号<input id="username" name="username" type="text" autocomplete="username" placeholder="请输入账号" /></label>
-          <label>密码<input id="password" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" /></label>
+          <label>
+            账号
+            <input id="username" name="username" type="text" autocomplete="username" placeholder="请输入账号" />
+          </label>
+          <label>
+            密码
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" />
+          </label>
           <p class="login-error" id="loginError" role="alert"></p>
           <button class="primary-btn" type="submit">进入教师管理</button>
         </form>
       </section>
     </div>
 
-    <script src="./app.js"></script>
+    <script>
+const teacherAccount = {
+  username: "wjwjwj",
+  password: "wj123"
+};
+
+const loginOpenButton = document.querySelector("#loginOpen");
+const footerLoginOpenButton = document.querySelector("#footerLoginOpen");
+const loginModal = document.querySelector("#loginModal");
+const loginForm = document.querySelector("#loginForm");
+const loginError = document.querySelector("#loginError");
+const usernameInput = document.querySelector("#username");
+const passwordInput = document.querySelector("#password");
+
+const dailyQuotes = [
+  {
+    quote: "It is never too late to be what you might have been.",
+    author: "George Eliot"
+  },
+  {
+    quote: "The mind is not a vessel to be filled, but a fire to be kindled.",
+    author: "Plutarch"
+  },
+  {
+    quote: "A room without books is like a body without a soul.",
+    author: "Cicero"
+  },
+  {
+    quote: "The beautiful thing about learning is that no one can take it away from you.",
+    author: "B. B. King"
+  },
+  {
+    quote: "Do not go where the path may lead; go instead where there is no path and leave a trail.",
+    author: "Ralph Waldo Emerson"
+  },
+  {
+    quote: "I am still learning.",
+    author: "Michelangelo"
+  },
+  {
+    quote: "Hope is the thing with feathers that perches in the soul.",
+    author: "Emily Dickinson"
+  },
+  {
+    quote: "The journey of a thousand miles begins with a single step.",
+    author: "Lao Tzu"
+  },
+  {
+    quote: "Nothing will work unless you do.",
+    author: "Maya Angelou"
+  },
+  {
+    quote: "To read without reflecting is like eating without digesting.",
+    author: "Edmund Burke"
+  }
+];
+
+const vocabulary = {
+  grade7: [
+    { word: "journey", phonetic: "/ˈdʒɜːni/", meaning: "旅行；历程", example: "Learning English is a long but beautiful journey." },
+    { word: "habit", phonetic: "/ˈhæbɪt/", meaning: "习惯", example: "Reading aloud is a useful habit." },
+    { word: "bright", phonetic: "/braɪt/", meaning: "明亮的；聪明的", example: "She has a bright smile in class." },
+    { word: "friendly", phonetic: "/ˈfrendli/", meaning: "友好的", example: "A friendly classroom makes students brave." },
+    { word: "practice", phonetic: "/ˈpræktɪs/", meaning: "练习；实践", example: "Small daily practice brings real progress." },
+    { word: "remember", phonetic: "/rɪˈmembə/", meaning: "记得；记住", example: "Try to remember words in sentences." }
+  ],
+  grade8: [
+    { word: "improve", phonetic: "/ɪmˈpruːv/", meaning: "提高；改善", example: "You can improve your reading step by step." },
+    { word: "develop", phonetic: "/dɪˈveləp/", meaning: "发展；养成", example: "Students develop confidence through speaking." },
+    { word: "experience", phonetic: "/ɪkˈspɪəriəns/", meaning: "经历；经验", example: "Every mistake is part of the learning experience." },
+    { word: "communicate", phonetic: "/kəˈmjuːnɪkeɪt/", meaning: "交流；沟通", example: "English helps us communicate with the world." },
+    { word: "patient", phonetic: "/ˈpeɪʃnt/", meaning: "有耐心的", example: "A patient learner is not afraid of slow progress." },
+    { word: "choice", phonetic: "/tʃɔɪs/", meaning: "选择", example: "A good choice today can change tomorrow." }
+  ],
+  grade9: [
+    { word: "courage", phonetic: "/ˈkʌrɪdʒ/", meaning: "勇气", example: "It takes courage to speak a new language." },
+    { word: "review", phonetic: "/rɪˈvjuː/", meaning: "复习；回顾", example: "Review your notes before the next lesson." },
+    { word: "valuable", phonetic: "/ˈvæljuəbl/", meaning: "宝贵的；有价值的", example: "Good feedback is valuable for writing." },
+    { word: "purpose", phonetic: "/ˈpɜːpəs/", meaning: "目的；意图", example: "Read with a clear purpose." },
+    { word: "achieve", phonetic: "/əˈtʃiːv/", meaning: "实现；达到", example: "You can achieve more with steady effort." },
+    { word: "express", phonetic: "/ɪkˈspres/", meaning: "表达", example: "Writing helps students express deeper ideas." }
+  ]
+};
+
+let currentGrade = "grade7";
+
+function renderDailyQuote() {
+  const quoteEl = document.querySelector("#dailyQuote");
+  const authorEl = document.querySelector("#dailyAuthor");
+  const dateEl = document.querySelector("#dailyDate");
+
+  if (!quoteEl || !authorEl || !dateEl) return;
+
+  const today = new Date();
+  const daySeed = Math.floor(today.setHours(0, 0, 0, 0) / 86400000);
+  const item = dailyQuotes[daySeed % dailyQuotes.length];
+  const dateText = new Intl.DateTimeFormat("zh-CN", {
+    month: "long",
+    day: "numeric",
+    weekday: "long"
+  }).format(new Date());
+
+  dateEl.textContent = dateText;
+  quoteEl.textContent = item.quote;
+  authorEl.textContent = item.author;
+}
+
+function renderWords() {
+  const wordGrid = document.querySelector("#wordGrid");
+  const searchInput = document.querySelector("#wordSearch");
+
+  if (!wordGrid || !searchInput) return;
+
+  const keyword = searchInput.value.trim().toLowerCase();
+  const words = vocabulary[currentGrade].filter((item) => {
+    return (
+      item.word.toLowerCase().includes(keyword) ||
+      item.meaning.toLowerCase().includes(keyword) ||
+      item.example.toLowerCase().includes(keyword)
+    );
+  });
+
+  if (words.length === 0) {
+    wordGrid.innerHTML = '<p class="word-empty">暂时没有找到这个词，换一个关键词试试。</p>';
+    return;
+  }
+
+  wordGrid.innerHTML = words
+    .map(
+      (item) => `
+        <article class="word-card">
+          <strong>${item.word}</strong>
+          <span class="phonetic">${item.phonetic}</span>
+          <p>${item.meaning}</p>
+          <em>${item.example}</em>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function setupVocabulary() {
+  const tabs = document.querySelectorAll(".vocab-tab");
+  const searchInput = document.querySelector("#wordSearch");
+
+  if (!tabs.length || !searchInput) return;
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((item) => item.classList.remove("active"));
+      tab.classList.add("active");
+      currentGrade = tab.dataset.grade;
+      searchInput.value = "";
+      renderWords();
+    });
+  });
+
+  searchInput.addEventListener("input", renderWords);
+  renderWords();
+}
+
+function openLoginModal() {
+  loginModal.classList.remove("hidden");
+  loginModal.setAttribute("aria-hidden", "false");
+  loginError.textContent = "";
+  loginForm.reset();
+  setTimeout(() => usernameInput.focus(), 0);
+}
+
+function closeLoginModal() {
+  loginModal.classList.add("hidden");
+  loginModal.setAttribute("aria-hidden", "true");
+}
+
+function enterTeacherDashboard() {
+  localStorage.setItem("teacherLoggedIn", "true");
+  window.location.href = "./teacher.html";
+}
+
+loginOpenButton.addEventListener("click", openLoginModal);
+footerLoginOpenButton.addEventListener("click", openLoginModal);
+
+document.querySelectorAll("[data-close-login]").forEach((button) => {
+  button.addEventListener("click", closeLoginModal);
+});
+
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value;
+
+  if (username === teacherAccount.username && password === teacherAccount.password) {
+    enterTeacherDashboard();
+    return;
+  }
+
+  loginError.textContent = "账号或密码不正确，请重新输入。";
+  passwordInput.value = "";
+  passwordInput.focus();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !loginModal.classList.contains("hidden")) {
+    closeLoginModal();
+  }
+});
+
+renderDailyQuote();
+setupVocabulary();
+
+    </script>
   </body>
 </html>
