@@ -719,6 +719,30 @@ select {
   align-items: center;
 }
 
+/* ---- form status ---- */
+.form-status {
+  min-height: 24px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.form-status.success {
+  color: var(--teal-dark);
+  font-weight: 800;
+}
+
+.form-status.error {
+  color: #b42318;
+  font-weight: 800;
+}
+
+.form-status a {
+  color: var(--teal);
+  font-weight: 800;
+  text-decoration: underline;
+}
+
 @media (max-width: 900px) {
   .topbar {
     align-items: flex-start;
@@ -830,8 +854,8 @@ select {
         <div class="hero-overlay"></div>
         <div class="hero-content">
           <p class="eyebrow">小学 · 初中 · 高中</p>
-          <h1>让英语学习，成为清澈而有光的成长。</h1>
-          <p class="hero-copy">面向中小学生的英语成长课程，从词汇、语法、阅读到写作表达，循序渐进地建立语言能力，也陪孩子看见自己的进步。</p>
+          <h1>让英语学习，成为清晰而有力的成长。</h1>
+          <p class="hero-copy">面向中小学生的英语成长课程，从词汇、语法、阅读到写作表达，循序渐进地建立语言能力，也陪伴孩子看见自己的进步。</p>
           <div class="hero-actions">
             <a class="primary-btn" href="#contact">预约试听</a>
             <a class="secondary-btn" href="#courses">查看课程</a>
@@ -840,16 +864,16 @@ select {
       </section>
 
       <section class="quick-panel" aria-label="课程概览">
-        <article><strong>小学</strong><span>兴趣启蒙 · 自然拼读</span></article>
+        <article><strong>小学</strong><span>启蒙听读 · 自然拼读</span></article>
         <article><strong>初中</strong><span>词汇语法 · 阅读表达</span></article>
-        <article><strong>高中</strong><span>思维写作 · 考试素养</span></article>
+        <article><strong>高中</strong><span>思维写作 · 考试冲刺</span></article>
       </section>
 
       <section id="daily" class="section daily-section">
         <div class="daily-copy">
           <p class="eyebrow">Daily Sentence</p>
           <h2>每日一句</h2>
-          <p>每天打开网站，读一句优美英文。不是为了背很多，而是让语言慢慢进入生活。</p>
+          <p>每天打开网页，读一句优美英文。不是为了记住很多，而是让语言悄然进入生活。</p>
         </div>
         <article class="quote-card" aria-live="polite">
           <span id="dailyDate">Today</span>
@@ -861,22 +885,22 @@ select {
       <section id="courses" class="section">
         <div class="section-head">
           <p class="eyebrow">Courses</p>
-          <h2>按学生阶段，铺一条稳稳向上的路</h2>
+          <h2>按学段衔接，选一条循序向上的路</h2>
         </div>
         <div class="level-grid compact-grid">
           <article class="level-card primary">
             <span class="tag">小学</span>
-            <h3>启蒙与语感</h3>
+            <h3>听读与语感</h3>
             <p>从自然拼读、日常表达和绘本阅读开始，让孩子在声音、图像和故事里亲近英语。</p>
           </article>
           <article class="level-card">
             <span class="tag">初中</span>
             <h3>体系与表达</h3>
-            <p>以校内知识为线索，打通词汇、语法、阅读和写作，让学生不只会做题，也会表达。</p>
+            <p>以校内知识为主线，打通词汇、语法、阅读和写作，让学生不仅会做题，也会表达。</p>
           </article>
           <article class="level-card accent">
             <span class="tag">高中</span>
-            <h3>思维与远行</h3>
+            <h3>思维与迁移</h3>
             <p>在阅读深度、写作结构和考试策略中训练语言思维，为更高阶段的学习蓄力。</p>
           </article>
         </div>
@@ -885,8 +909,8 @@ select {
       <section id="vocabulary" class="section vocab-section">
         <div class="section-head">
           <p class="eyebrow">Junior Vocabulary</p>
-          <h2>初中词汇花园</h2>
-          <p>把单词放回句子和场景里学。每天认识一点、复现一点，词汇就会慢慢长成能力。</p>
+          <h2>初中词汇随身记</h2>
+          <p>把单词放回句子里和场景里学。每天认识一个、复现一个，词汇就会悄然长成能力。</p>
         </div>
         <div class="vocab-tool">
           <div class="vocab-toolbar" role="tablist" aria-label="词汇年级选择">
@@ -905,23 +929,23 @@ select {
       <section id="why" class="section why-section">
         <div class="section-head">
           <p class="eyebrow">Learning Method</p>
-          <h2>温和而有章法，清楚也有耐心</h2>
+          <h2>温和而简单的方法，清晰也有耐心</h2>
         </div>
         <div class="why-grid">
           <article>
             <span>01</span>
-            <h3>先看见问题</h3>
-            <p>从词汇、语法、阅读和表达中找到卡点，再安排真正需要的练习。</p>
+            <h3>先看见薄弱点</h3>
+            <p>从词汇、语法、阅读和表达中找准卡点，再安排真正需要的练习。</p>
           </article>
           <article>
             <span>02</span>
-            <h3>把方法讲明白</h3>
-            <p>不只给答案，更讲清为什么这样想、怎样迁移到下一道题。</p>
+            <h3>把方法说明白</h3>
+            <p>不只给答案，更说清为什么这么想、怎样推导到下一步题目。</p>
           </article>
           <article>
             <span>03</span>
             <h3>让进步可追踪</h3>
-            <p>课后梳理重点和下一步安排，让学生和家长都知道努力的方向。</p>
+            <p>课后标注重点和下一步安排，让学生和家长都知道努力的方向。</p>
           </article>
         </div>
       </section>
@@ -930,9 +954,9 @@ select {
         <div>
           <p class="eyebrow">Book a Trial</p>
           <h2>预约一节试听课</h2>
-          <p>留下学生姓名、学段、学习目标和微信号，老师会根据情况沟通适合的学习安排。</p>
+          <p>留下学生姓名、年级、学习目标和微信号，老师会根据情况沟通合适的学习安排。</p>
         </div>
-        <form class="contact-form" action="https://formsubmit.co/jiawenfan851@gmail.com" method="POST">
+        <form id="contactForm" class="contact-form" action="https://formsubmit.co/jiawenfan851@gmail.com" method="POST" accept-charset="UTF-8">
           <input type="hidden" name="_subject" value="新的英语课程预约" />
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
@@ -943,8 +967,8 @@ select {
             <input name="学生姓名" type="text" placeholder="请输入学生姓名" required />
           </label>
           <label>
-            学生学段
-            <select name="学生学段" required>
+            学生年级
+            <select name="学生年级" required>
               <option value="小学">小学</option>
               <option value="初中">初中</option>
               <option value="高中">高中</option>
@@ -952,13 +976,14 @@ select {
           </label>
           <label>
             学习目标
-            <input name="学习目标" type="text" placeholder="例如：校内同步、阅读提升、中高考冲刺" required />
+            <input name="学习目标" type="text" placeholder="例如：校内同步、阅读提升、中考备考" required />
           </label>
           <label>
             微信号
             <input name="微信号" type="text" placeholder="请输入学生或家长微信号" required />
           </label>
-          <button class="primary-btn" type="submit">提交预约</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          <button class="primary-btn" id="submitButton" type="submit">提交预约</button>
         </form>
       </section>
     </main>
@@ -974,7 +999,7 @@ select {
         <button class="modal-close" type="button" aria-label="关闭登录窗口" data-close-login>×</button>
         <p class="eyebrow">Teacher Login</p>
         <h2 id="loginTitle">老师登录</h2>
-        <p class="login-note">登录后进入教师管理界面。</p>
+        <p class="login-note">登录后进入教师管理面板。</p>
         <form id="loginForm" class="login-form">
           <label>
             账号
@@ -1049,7 +1074,7 @@ const dailyQuotes = [
 
 const vocabulary = {
   grade7: [
-    { word: "journey", phonetic: "/ˈdʒɜːni/", meaning: "旅行；历程", example: "Learning English is a long but beautiful journey." },
+    { word: "journey", phonetic: "/ˈdʒɜːni/", meaning: "旅行；旅程", example: "Learning English is a long but beautiful journey." },
     { word: "habit", phonetic: "/ˈhæbɪt/", meaning: "习惯", example: "Reading aloud is a useful habit." },
     { word: "bright", phonetic: "/braɪt/", meaning: "明亮的；聪明的", example: "She has a bright smile in class." },
     { word: "friendly", phonetic: "/ˈfrendli/", meaning: "友好的", example: "A friendly classroom makes students brave." },
@@ -1058,8 +1083,8 @@ const vocabulary = {
   ],
   grade8: [
     { word: "improve", phonetic: "/ɪmˈpruːv/", meaning: "提高；改善", example: "You can improve your reading step by step." },
-    { word: "develop", phonetic: "/dɪˈveləp/", meaning: "发展；养成", example: "Students develop confidence through speaking." },
-    { word: "experience", phonetic: "/ɪkˈspɪəriəns/", meaning: "经历；经验", example: "Every mistake is part of the learning experience." },
+    { word: "develop", phonetic: "/dɪˈveləp/", meaning: "发展；培养", example: "Students develop confidence through speaking." },
+    { word: "experience", phonetic: "/ɪkˈspɪəriəns/", meaning: "经验；经历", example: "Every mistake is part of the learning experience." },
     { word: "communicate", phonetic: "/kəˈmjuːnɪkeɪt/", meaning: "交流；沟通", example: "English helps us communicate with the world." },
     { word: "patient", phonetic: "/ˈpeɪʃnt/", meaning: "有耐心的", example: "A patient learner is not afraid of slow progress." },
     { word: "choice", phonetic: "/tʃɔɪs/", meaning: "选择", example: "A good choice today can change tomorrow." }
@@ -1113,7 +1138,7 @@ function renderWords() {
   });
 
   if (words.length === 0) {
-    wordGrid.innerHTML = '<p class="word-empty">暂时没有找到这个词，换一个关键词试试。</p>';
+    wordGrid.innerHTML = '<p class="word-empty">暂时没有找到这个单词，换一个关键词试试。</p>';
     return;
   }
 
@@ -1191,6 +1216,60 @@ loginForm.addEventListener("submit", (event) => {
   passwordInput.value = "";
   passwordInput.focus();
 });
+
+/* ---- contact form AJAX submission ---- */
+const contactForm = document.querySelector("#contactForm");
+const formStatus = document.querySelector("#formStatus");
+const submitButton = document.querySelector("#submitButton");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    formStatus.className = "form-status";
+    formStatus.textContent = "正在提交，请稍等……";
+    submitButton.disabled = true;
+    submitButton.textContent = "提交中";
+
+    const formData = new FormData(contactForm);
+    formData.append("提交来源", window.location.href);
+    formData.append("提交时间", new Date().toLocaleString("zh-CN"));
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/jiawenfan851@gmail.com", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json"
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error("FormSubmit request failed");
+      }
+
+      formStatus.className = "form-status success";
+      formStatus.textContent = "提交成功！老师会根据填写的信息尽快联系你。";
+      contactForm.reset();
+    } catch (error) {
+      const name = contactForm.querySelector('[name="学生姓名"]')?.value || "";
+      const grade = contactForm.querySelector('[name="学生年级"]')?.value || "";
+      const goal = contactForm.querySelector('[name="学习目标"]')?.value || "";
+      const wechat = contactForm.querySelector('[name="微信号"]')?.value || "";
+
+      const subject = encodeURIComponent("新的英语课程预约");
+      const body = encodeURIComponent(
+        `学生姓名：${name}\n学生年级：${grade}\n学习目标：${goal}\n微信号：${wechat}\n提交页面：${window.location.href}`
+      );
+
+      formStatus.className = "form-status error";
+      formStatus.innerHTML = `提交没有成功。请点击 <a href="mailto:jiawenfan851@gmail.com?subject=${subject}&body=${body}">这里直接发送邮件</a>，或稍后再试。`;
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "提交预约";
+    }
+  });
+}
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !loginModal.classList.contains("hidden")) {
