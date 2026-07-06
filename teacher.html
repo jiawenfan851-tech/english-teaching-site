@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>教师管理 | Bright English Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="teacher-body">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="返回首页">
+        <span class="brand-mark">B</span>
+        <span><strong>Bright English</strong><small>教师管理</small></span>
+      </a>
+      <nav class="nav" aria-label="教师导航"><a href="#schedule">课程</a><a href="#students">学生</a><a href="#actions">操作</a></nav>
+      <button class="nav-action" id="logoutButton" type="button">退出登录</button>
+    </header>
+
+    <main class="teacher-shell">
+      <section class="teacher-hero">
+        <div><p class="eyebrow">Teacher Dashboard</p><h1>欢迎回来，王老师</h1><p>这里用于管理课程安排、学生跟进和教学资料。</p></div>
+        <a class="logout-link" href="./index.html">返回网站首页</a>
+      </section>
+
+      <section class="dashboard-grid" aria-label="教师数据概览">
+        <article class="dashboard-card"><span>今日课程</span><strong>3 节</strong><p>小学自然拼读、初中语法、高中写作。</p></article>
+        <article class="dashboard-card"><span>待联系学生</span><strong>5 人</strong><p>预约信息可从邮箱整理后添加到这里。</p></article>
+        <article class="dashboard-card"><span>教学资料</span><strong>24 份</strong><p>课件、练习、作文模板可继续扩展上传功能。</p></article>
+      </section>
+
+      <section id="schedule" class="teacher-panel">
+        <p class="eyebrow">Schedule</p><h2>近期课程</h2>
+        <div class="student-list">
+          <article><span>18:00</span><h3>小学自然拼读</h3><p>复习短元音，练习 CVC 单词拼读。</p></article>
+          <article><span>19:10</span><h3>初中语法同步</h3><p>一般过去时与阅读句子定位。</p></article>
+          <article><span>20:20</span><h3>高中写作提升</h3><p>应用文结构和读后续写动作描写。</p></article>
+        </div>
+      </section>
+
+      <section id="students" class="teacher-panel">
+        <p class="eyebrow">Students</p><h2>学生跟进</h2>
+        <div class="student-list">
+          <article><span>新预约</span><h3>等待添加微信</h3><p>学生提交表单后，信息会发送到老师邮箱。</p></article>
+          <article><span>本周重点</span><h3>错题复盘</h3><p>记录词汇、语法、阅读和写作问题。</p></article>
+          <article><span>课后反馈</span><h3>家长沟通</h3><p>整理学习表现和下一步练习安排。</p></article>
+        </div>
+      </section>
+
+      <section id="actions" class="teacher-panel">
+        <p class="eyebrow">Actions</p><h2>快捷操作</h2>
+        <div class="teacher-actions"><button type="button">添加学生</button><button type="button">记录课程</button><button type="button">上传资料</button><button type="button">查看预约邮箱</button></div>
+      </section>
+    </main>
+
+    <script src="./teacher.js"></script>
+  </body>
+</html>
