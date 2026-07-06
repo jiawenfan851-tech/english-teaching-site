@@ -1,23 +1,18 @@
 # Bright English Studio
 
-中小学英语教学展示网站，包含课程体系、课堂工具、资料库、预约表单和老师登录演示。
+中小学英语辅导对外展示网站，包含简洁首页、预约表单和独立教师管理界面。
 
 ## 老师登录
 
 - 账号：`wjwjwj`
 - 密码：`wj123`
 
-当前登录功能为静态网页演示版，适合展示原型。正式上线时建议改成后端登录，避免把密码写在前端代码里。
+登录成功后会跳转到 `teacher.html` 教师管理界面。
 
-## GitHub Pages 设置
+当前登录功能为静态网页演示版，适合展示原型。正式长期使用时建议改成后端登录，避免把密码写在前端代码里。
 
-如果页面还没有公开访问地址，请进入仓库：
+## GitHub Pages
 
-`Settings` -> `Pages` -> `Deploy from a branch`
+公开地址：
 
-然后选择：
-
-- Branch: `main`
-- Folder: `/root`
-
-保存后等待 1-3 分钟即可访问。
+https://jiawenfan851-tech.github.io/english-teaching-site/
