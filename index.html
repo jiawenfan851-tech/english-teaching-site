@@ -140,6 +140,12 @@ textarea {
   transform: scaleX(1);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .nav-action,
 .primary-btn,
 .secondary-btn,
@@ -167,6 +173,19 @@ textarea {
   background: #185641;
   transform: translateY(-1px);
 }
+
+.teacher-action {
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.teacher-action:hover { border-color: var(--teal); color: var(--teal); }
 
 .secondary-btn {
   color: var(--ink);
@@ -997,6 +1016,8 @@ button:focus-visible {
     min-width: 0;
   }
 
+  .header-actions { margin-left: auto; }
+
   .nav {
     order: 3;
     width: 100%;
@@ -1040,6 +1061,8 @@ button:focus-visible {
   .nav-action {
     min-height: 40px;
   }
+
+  .header-actions button { min-height: 40px; padding-inline: 11px; font-size: 12px; }
 
   .hero {
     min-height: 640px;
@@ -1125,7 +1148,10 @@ button:focus-visible {
         <a href="./learn.html">学习馆</a>
         <a href="#contact">预约</a>
       </nav>
-      <button class="nav-action" id="loginOpen" type="button">老师登录</button>
+      <div class="header-actions">
+        <button class="nav-action" id="studentLoginOpen" type="button">学生登录</button>
+        <button class="teacher-action" id="loginOpen" type="button">老师入口</button>
+      </div>
     </header>
 
     <main id="home">
@@ -1151,7 +1177,6 @@ button:focus-visible {
 
       <section id="daily" class="section daily-section">
         <div class="daily-copy">
-          <p class="eyebrow">Daily Sentence</p>
           <h2>每日一句</h2>
         </div>
         <article class="quote-card" aria-live="polite">
@@ -1163,7 +1188,6 @@ button:focus-visible {
 
       <section id="courses" class="section">
         <div class="section-head">
-          <p class="eyebrow">Courses</p>
           <h2>按学段衔接，选一条循序向上的路</h2>
         </div>
         <div class="level-grid compact-grid">
@@ -1185,49 +1209,32 @@ button:focus-visible {
         </div>
       </section>
 
-      <section class="why-section" aria-labelledby="approachTitle">
-        <div class="section-head">
-          <p class="eyebrow">Learning Approach</p>
-          <h2 id="approachTitle">让每一步学习，都有清楚的方向</h2>
-        </div>
-        <div class="why-grid">
-          <article>
-            <span>01 · 明确目标</span>
-            <h3>从当前学段出发</h3>
-            <p>先确认学生所在学段和学习目标，再讨论适合的试听安排与学习重点。</p>
-          </article>
-          <article>
-            <span>02 · 稳定练习</span>
-            <h3>把理解带到每天</h3>
-            <p>课堂内容与词汇、语法练习衔接，让理解、复习和表达形成连续过程。</p>
-          </article>
-          <article>
-            <span>03 · 及时回看</span>
-            <h3>看见尚未掌握的部分</h3>
-            <p>使用学习馆记录收藏、复习与练习进度，把下一步安排建立在真实记录上。</p>
-          </article>
-        </div>
-      </section>
-
       <section id="vocabulary" class="section vocab-section">
         <div class="section-head">
-          <p class="eyebrow">Learning Commons</p>
-          <h2>把一节课的理解，带到每天的练习里</h2>
+          <h2>小学、初中、高中英语学习资源</h2>
         </div>
         <div class="learning-entry">
-          <a href="./learn.html#vocabulary">
-            <span>01</span>
+          <a href="./learn.html?stage=primary#vocabulary">
+            <span>小学</span>
             <div>
-              <strong>1603 词 · 初中核心词库</strong>
-              <p>按年级与难度筛选，支持搜索、朗读、收藏与复习。</p>
+              <strong>自然拼读与基础词汇</strong>
+              <p>从声音、单词和基础句型开始。</p>
             </div>
             <b aria-hidden="true">→</b>
           </a>
-          <a href="./learn.html#grammar">
-            <span>02</span>
+          <a href="./learn.html?stage=middle#vocabulary">
+            <span>初中</span>
             <div>
-              <strong>38 章 · 初中语法图谱</strong>
-              <p>按主题梳理语法知识，并通过即时练习检查理解。</p>
+              <strong>核心词汇与语法体系</strong>
+              <p>按年级搜索、朗读、练习和复习。</p>
+            </div>
+            <b aria-hidden="true">→</b>
+          </a>
+          <a href="./learn.html?stage=high#vocabulary">
+            <span>高中</span>
+            <div>
+              <strong>高频词汇与综合能力</strong>
+              <p>练习长难句、阅读策略与写作表达。</p>
             </div>
             <b aria-hidden="true">→</b>
           </a>
@@ -1236,14 +1243,8 @@ button:focus-visible {
 
       <section id="contact" class="section contact-section">
         <div class="contact-intro">
-          <p class="eyebrow">Book a Trial</p>
           <h2>预约一节试听课</h2>
-          <p>填写预约信息后，老师会查看时间安排并与你联系。提交申请不代表试听时间已经最终确认。</p>
-          <ol class="booking-steps" aria-label="预约流程">
-            <li><strong>提交信息</strong>填写学生情况、学习目标和希望试听时间。</li>
-            <li><strong>老师确认</strong>老师查看课程安排后，通过微信或其他联系方式沟通。</li>
-            <li><strong>安排试听</strong>双方确认具体时间后，再完成试听安排。</li>
-          </ol>
+          <p>留下学生情况与合适的时间，老师会与你联系确认试听安排。</p>
         </div>
         <form id="contactForm" class="contact-form" action="https://formspree.io/f/mdarqzkb" method="POST" accept-charset="UTF-8" data-ajax-endpoint="https://formspree.io/f/mdarqzkb">
           <input type="hidden" name="subject" value="新的英语课程预约" />
@@ -1323,7 +1324,8 @@ button:focus-visible {
       </nav>
       <div class="footer-actions">
         <a class="footer-email" href="mailto:jiawenfan851@gmail.com?subject=英语课程预约咨询">邮件联系</a>
-        <button class="footer-login" id="footerLoginOpen" type="button">老师登录</button>
+        <button class="footer-login" id="footerStudentLoginOpen" type="button">学生登录</button>
+        <button class="footer-login" id="footerLoginOpen" type="button">老师入口</button>
       </div>
     </footer>
 
@@ -1331,8 +1333,7 @@ button:focus-visible {
       <div class="modal-backdrop" data-close-login></div>
       <section class="login-dialog" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
         <button class="modal-close" type="button" aria-label="关闭登录窗口" data-close-login>×</button>
-        <p class="eyebrow">Teacher Login</p>
-        <h2 id="loginTitle">老师登录</h2>
+        <h2 id="loginTitle">老师入口</h2>
         <form id="loginForm" class="login-form">
           <label>
             账号
@@ -1348,7 +1349,28 @@ button:focus-visible {
       </section>
     </div>
 
+    <div class="modal hidden" id="studentLoginModal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-student-login></div>
+      <section class="login-dialog" role="dialog" aria-modal="true" aria-labelledby="studentLoginTitle">
+        <button class="modal-close" type="button" aria-label="关闭学生登录窗口" data-close-student-login>×</button>
+        <h2 id="studentLoginTitle">学生登录</h2>
+        <form id="studentLoginForm" class="login-form">
+          <label>
+            学生账号
+            <input id="studentUsername" name="studentUsername" type="text" autocomplete="username" placeholder="请输入学生账号" required />
+          </label>
+          <label>
+            密码
+            <input id="studentPassword" name="studentPassword" type="password" autocomplete="current-password" placeholder="请输入密码" required />
+          </label>
+          <p class="login-error" id="studentLoginError" role="alert"></p>
+          <button class="primary-btn" type="submit">进入学生中心</button>
+        </form>
+      </section>
+    </div>
+
     <script src="./auth.js"></script>
+    <script src="./student-auth.js"></script>
     <script src="./booking.js"></script>
     <script>
 const loginOpenButton = document.querySelector("#loginOpen");
@@ -1358,6 +1380,13 @@ const loginForm = document.querySelector("#loginForm");
 const loginError = document.querySelector("#loginError");
 const usernameInput = document.querySelector("#username");
 const passwordInput = document.querySelector("#password");
+const studentLoginOpenButton = document.querySelector("#studentLoginOpen");
+const footerStudentLoginOpenButton = document.querySelector("#footerStudentLoginOpen");
+const studentLoginModal = document.querySelector("#studentLoginModal");
+const studentLoginForm = document.querySelector("#studentLoginForm");
+const studentLoginError = document.querySelector("#studentLoginError");
+const studentUsernameInput = document.querySelector("#studentUsername");
+const studentPasswordInput = document.querySelector("#studentPassword");
 
 const dailyQuotes = [
   {
@@ -1524,11 +1553,35 @@ function enterTeacherDashboard() {
   window.location.href = "./teacher.html";
 }
 
+function openStudentLoginModal() {
+  studentLoginModal.classList.remove("hidden");
+  studentLoginModal.setAttribute("aria-hidden", "false");
+  studentLoginError.textContent = "";
+  studentLoginForm.reset();
+  setTimeout(() => studentUsernameInput.focus(), 0);
+}
+
+function closeStudentLoginModal() {
+  studentLoginModal.classList.add("hidden");
+  studentLoginModal.setAttribute("aria-hidden", "true");
+}
+
+function enterStudentCenter() {
+  window.StudentAuth.startSession();
+  window.location.href = "./student.html";
+}
+
 loginOpenButton.addEventListener("click", openLoginModal);
 footerLoginOpenButton.addEventListener("click", openLoginModal);
+studentLoginOpenButton.addEventListener("click", openStudentLoginModal);
+footerStudentLoginOpenButton.addEventListener("click", openStudentLoginModal);
 
 document.querySelectorAll("[data-close-login]").forEach((button) => {
   button.addEventListener("click", closeLoginModal);
+});
+
+document.querySelectorAll("[data-close-student-login]").forEach((button) => {
+  button.addEventListener("click", closeStudentLoginModal);
 });
 
 loginForm.addEventListener("submit", async (event) => {
@@ -1547,14 +1600,34 @@ loginForm.addEventListener("submit", async (event) => {
   passwordInput.focus();
 });
 
+studentLoginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (await window.StudentAuth.verify(studentUsernameInput.value, studentPasswordInput.value)) {
+    enterStudentCenter();
+    return;
+  }
+
+  studentLoginError.textContent = "账号或密码不正确，请重新输入。";
+  studentPasswordInput.value = "";
+  studentPasswordInput.focus();
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !loginModal.classList.contains("hidden")) {
     closeLoginModal();
+  }
+  if (event.key === "Escape" && !studentLoginModal.classList.contains("hidden")) {
+    closeStudentLoginModal();
   }
 });
 
 renderDailyQuote();
 setupVocabulary();
+
+if (new URLSearchParams(window.location.search).has("studentLogin")) {
+  openStudentLoginModal();
+}
 
     </script>
   </body>
