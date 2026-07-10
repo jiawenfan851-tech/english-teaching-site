@@ -54,7 +54,8 @@ a {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -556,14 +557,24 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
-  min-height: 48px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0 14px;
+  padding: 12px 14px;
   color: var(--ink);
   background: #fffefb;
+}
+
+input,
+select {
+  min-height: 48px;
+}
+
+textarea {
+  min-height: 112px;
+  resize: vertical;
 }
 
 .form-honey {
@@ -752,25 +763,35 @@ select {
   align-items: center;
 }
 
-/* ---- form status ---- */
-.form-status {
+/* ---- booking status ---- */
+.booking-status {
   min-height: 24px;
   margin: 0;
   color: var(--muted);
   line-height: 1.6;
 }
 
-.form-status.success {
+.booking-status--pending {
+  color: var(--teal-dark);
+  font-weight: 700;
+}
+
+.booking-status--success {
   color: var(--teal-dark);
   font-weight: 800;
 }
 
-.form-status.error {
+.booking-status--error {
   color: #b42318;
   font-weight: 800;
 }
 
-.form-status a {
+.booking-status--uncertain {
+  color: #8a4b08;
+  font-weight: 700;
+}
+
+.booking-status a {
   color: var(--teal);
   font-weight: 800;
   text-decoration: underline;
@@ -994,6 +1015,7 @@ select {
         <div>
           <p class="eyebrow">Book a Trial</p>
           <h2>预约一节试听课</h2>
+          <p>填写预约信息后，老师会查看时间安排并与你联系。提交申请不代表试听时间已经最终确认。</p>
         </div>
         <form id="contactForm" class="contact-form" action="https://formsubmit.co/jiawenfan851@gmail.com" method="POST" accept-charset="UTF-8">
           <input type="hidden" name="_subject" value="新的英语课程预约" />
@@ -1004,11 +1026,16 @@ select {
           <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" />
           <label>
             学生姓名
-            <input name="学生姓名" type="text" placeholder="请输入学生姓名" required />
+            <input name="学生姓名" type="text" maxlength="30" autocomplete="name" placeholder="请输入学生姓名" required />
+          </label>
+          <label>
+            家长姓名
+            <input name="家长姓名" type="text" maxlength="30" placeholder="请输入家长姓名" required />
           </label>
           <label>
             学生年级
             <select name="学生年级" required>
+              <option value="" selected disabled>请选择学生年级</option>
               <option value="小学">小学</option>
               <option value="初中">初中</option>
               <option value="高中">高中</option>
@@ -1016,18 +1043,45 @@ select {
           </label>
           <label>
             学习目标
-            <input name="学习目标" type="text" placeholder="例如：校内同步、阅读提升、中考备考" required />
+            <textarea name="学习目标" maxlength="500" placeholder="例如：校内同步、阅读提升、中考备考" required></textarea>
           </label>
           <label>
             微信号
-            <input name="微信号" type="text" placeholder="请输入学生或家长微信号" required />
+            <input name="微信号" type="text" maxlength="64" autocomplete="off" placeholder="请输入学生或家长微信号" required />
+          </label>
+          <label>
+            希望试听日期
+            <input name="希望试听日期" type="date" required />
+          </label>
+          <label>
+            希望试听时间段
+            <select name="希望试听时间段" required>
+              <option value="" selected disabled>请选择时间段</option>
+              <option value="上午 09:00–12:00">上午 09:00–12:00</option>
+              <option value="下午 14:00–18:00">下午 14:00–18:00</option>
+              <option value="晚上 18:00–21:00">晚上 18:00–21:00</option>
+              <option value="时间待沟通">时间待沟通</option>
+            </select>
+          </label>
+          <label>
+            备用时间（选填）
+            <input name="备用时间" type="text" maxlength="100" placeholder="例如：周六下午或周日晚上" />
+          </label>
+          <label>
+            联系电话或邮箱（选填）
+            <input name="联系电话或邮箱" type="text" maxlength="100" autocomplete="email" placeholder="填写手机号或邮箱，也可以留空" />
+          </label>
+          <label>
+            备注（选填）
+            <textarea name="备注" maxlength="1000" placeholder="如有其他需要说明的情况，请填写在这里"></textarea>
           </label>
           <label class="consent">
             <input name="信息使用确认" type="checkbox" value="同意用于预约联系" required />
             <span>同意将以上信息用于本次预约联系</span>
           </label>
-          <button class="primary-btn" type="submit">提交预约</button>
-          <p class="booking-fallback">若提交页面没有打开，可<a href="mailto:jiawenfan851@gmail.com?subject=英语课程预约">直接发送邮件</a>。</p>
+          <button class="primary-btn" type="submit">提交试听申请</button>
+          <p id="bookingStatus" class="booking-status" role="status" aria-live="polite"></p>
+          <p class="booking-fallback">如需备用联系方式，可<a href="mailto:jiawenfan851@gmail.com?subject=英语课程预约咨询">发送邮件联系老师</a>。</p>
         </form>
       </section>
     </main>
@@ -1059,6 +1113,7 @@ select {
     </div>
 
     <script src="./auth.js"></script>
+    <script src="./booking.js"></script>
     <script>
 const loginOpenButton = document.querySelector("#loginOpen");
 const footerLoginOpenButton = document.querySelector("#footerLoginOpen");
