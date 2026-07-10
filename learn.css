@@ -281,9 +281,11 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64
 }
 
 .word-card[data-level="A2"] { border-top-color: var(--blue); }
+.word-card[data-level="必修"] { border-top-color: var(--blue); }
 .word-card[data-level="B1"],
 .word-card[data-level="B2"],
 .word-card[data-level="B2+"],
+.word-card[data-level="选择性必修"],
 .word-card[data-level="-"] { border-top-color: var(--coral); }
 .word-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 
