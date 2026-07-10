@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="面向中小学生的英语成长课程，以及可以每天使用的初中词汇与语法学习馆。" />
+    <meta property="og:title" content="Bright English | 嘉文英语成长课程" />
+    <meta property="og:description" content="让英语学习，成为清澈而有光的成长。" />
+    <meta property="og:image" content="https://jiawenfan851-tech.github.io/english-teaching-site/assets/og-learning.jpg" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
     <title>Bright English Studio | 中小学英语成长课程</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -382,6 +388,29 @@ h3 {
   scroll-margin-top: 92px;
 }
 
+.learning-entry {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.learning-entry a {
+  min-height: 132px;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 22px;
+  color: inherit;
+  text-decoration: none;
+  transition: background 180ms ease;
+}
+
+.learning-entry a + a { border-top: 1px solid var(--line); }
+.learning-entry a:hover { background: #f3f8f5; }
+.learning-entry a > span { color: var(--coral); font: 800 14px/1 "Plus Jakarta Sans", sans-serif; }
+.learning-entry strong { color: var(--teal-dark); font-size: 26px; }
+.learning-entry p { margin: 7px 0 0; color: var(--muted); line-height: 1.7; }
+.learning-entry b { font-size: 28px; font-weight: 500; }
+
 .vocab-tool {
   padding: 26px;
   border: 1px solid var(--line);
@@ -743,6 +772,19 @@ select {
   text-decoration: underline;
 }
 
+.booking-fallback {
+  margin: -4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.booking-fallback a {
+  color: var(--teal);
+  font-weight: 800;
+  text-decoration: underline;
+}
+
 @media (max-width: 900px) {
   .topbar {
     align-items: flex-start;
@@ -812,6 +854,14 @@ select {
     min-height: 92px;
   }
 
+  .learning-entry a {
+    min-height: 150px;
+    grid-template-columns: 32px minmax(0, 1fr) 24px;
+    gap: 12px;
+  }
+
+  .learning-entry strong { font-size: 21px; }
+
   .footer {
     align-items: flex-start;
     flex-direction: column;
@@ -841,7 +891,7 @@ select {
       <nav class="nav" aria-label="主导航">
         <a href="#courses">课程</a>
         <a href="#daily">每日一句</a>
-        <a href="#vocabulary">初中词汇</a>
+        <a href="./learn.html">学习馆</a>
         <a href="#why">方法</a>
         <a href="#contact">预约</a>
       </nav>
@@ -858,7 +908,7 @@ select {
           <p class="hero-copy">面向中小学生的英语成长课程，从词汇、语法、阅读到写作表达，循序渐进地建立语言能力，也陪伴孩子看见自己的进步。</p>
           <div class="hero-actions">
             <a class="primary-btn" href="#contact">预约试听</a>
-            <a class="secondary-btn" href="#courses">查看课程</a>
+            <a class="secondary-btn" href="./learn.html">进入学习馆</a>
           </div>
         </div>
       </section>
@@ -908,21 +958,21 @@ select {
 
       <section id="vocabulary" class="section vocab-section">
         <div class="section-head">
-          <p class="eyebrow">Junior Vocabulary</p>
-          <h2>初中词汇随身记</h2>
-          <p>把单词放回句子里和场景里学。每天认识一个、复现一个，词汇就会悄然长成能力。</p>
+          <p class="eyebrow">Learning Commons</p>
+          <h2>把一节课的理解，带到每天的练习里</h2>
+          <p>初中核心词汇与语法脉络已经整理成一座开放的学习馆。可以查，也可以练；记住的与暂时不会的，都有自己的位置。</p>
         </div>
-        <div class="vocab-tool">
-          <div class="vocab-toolbar" role="tablist" aria-label="词汇年级选择">
-            <button class="vocab-tab active" type="button" data-grade="grade7">七年级</button>
-            <button class="vocab-tab" type="button" data-grade="grade8">八年级</button>
-            <button class="vocab-tab" type="button" data-grade="grade9">九年级</button>
-          </div>
-          <label class="vocab-search">
-            <span>查找单词</span>
-            <input id="wordSearch" type="search" placeholder="输入英文或中文，如 courage / 勇气" />
-          </label>
-          <div class="word-grid" id="wordGrid" aria-live="polite"></div>
+        <div class="learning-entry">
+          <a href="./learn.html#vocabulary">
+            <span>01</span>
+            <div><strong>1603 词 · 初中核心词库</strong><p>按阶段检索、朗读、收藏，把不熟的词留到下一次复习。</p></div>
+            <b aria-hidden="true">→</b>
+          </a>
+          <a href="./learn.html#grammar">
+            <span>02</span>
+            <div><strong>38 章 · 初中语法图谱</strong><p>从句子骨架到复合句，每一章都有讲解、例句和即时小测。</p></div>
+            <b aria-hidden="true">→</b>
+          </a>
         </div>
       </section>
 
@@ -961,6 +1011,7 @@ select {
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_next" value="https://jiawenfan851-tech.github.io/english-teaching-site/thanks.html" />
+          <input type="hidden" name="_url" value="https://jiawenfan851-tech.github.io/english-teaching-site/" />
           <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" />
           <label>
             学生姓名
@@ -982,8 +1033,8 @@ select {
             微信号
             <input name="微信号" type="text" placeholder="请输入学生或家长微信号" required />
           </label>
-          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-          <button class="primary-btn" id="submitButton" type="submit">提交预约</button>
+          <button class="primary-btn" type="submit">提交预约</button>
+          <p class="booking-fallback">若提交页面没有打开，可<a href="mailto:jiawenfan851@gmail.com?subject=英语课程预约">直接发送邮件</a>。</p>
         </form>
       </section>
     </main>
@@ -1216,60 +1267,6 @@ loginForm.addEventListener("submit", (event) => {
   passwordInput.value = "";
   passwordInput.focus();
 });
-
-/* ---- contact form AJAX submission ---- */
-const contactForm = document.querySelector("#contactForm");
-const formStatus = document.querySelector("#formStatus");
-const submitButton = document.querySelector("#submitButton");
-
-if (contactForm) {
-  contactForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    formStatus.className = "form-status";
-    formStatus.textContent = "正在提交，请稍等……";
-    submitButton.disabled = true;
-    submitButton.textContent = "提交中";
-
-    const formData = new FormData(contactForm);
-    formData.append("提交来源", window.location.href);
-    formData.append("提交时间", new Date().toLocaleString("zh-CN"));
-
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/jiawenfan851@gmail.com", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json"
-        },
-        body: formData
-      });
-
-      if (!response.ok) {
-        throw new Error("FormSubmit request failed");
-      }
-
-      formStatus.className = "form-status success";
-      formStatus.textContent = "提交成功！老师会根据填写的信息尽快联系你。";
-      contactForm.reset();
-    } catch (error) {
-      const name = contactForm.querySelector('[name="学生姓名"]')?.value || "";
-      const grade = contactForm.querySelector('[name="学生年级"]')?.value || "";
-      const goal = contactForm.querySelector('[name="学习目标"]')?.value || "";
-      const wechat = contactForm.querySelector('[name="微信号"]')?.value || "";
-
-      const subject = encodeURIComponent("新的英语课程预约");
-      const body = encodeURIComponent(
-        `学生姓名：${name}\n学生年级：${grade}\n学习目标：${goal}\n微信号：${wechat}\n提交页面：${window.location.href}`
-      );
-
-      formStatus.className = "form-status error";
-      formStatus.innerHTML = `提交没有成功。请点击 <a href="mailto:jiawenfan851@gmail.com?subject=${subject}&body=${body}">这里直接发送邮件</a>，或稍后再试。`;
-    } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "提交预约";
-    }
-  });
-}
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !loginModal.classList.contains("hidden")) {
