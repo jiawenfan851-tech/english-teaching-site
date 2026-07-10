@@ -12,6 +12,8 @@
   --coral-soft: #f6e4df;
   --yellow: #f2c44e;
   --shadow: 0 12px 32px rgba(24, 52, 45, 0.09);
+  --latin: "Avenir Next", "Segoe UI", Arial, sans-serif;
+  --number: "DIN Alternate", "Arial Narrow", "Segoe UI", sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -101,10 +103,35 @@ a { color: inherit; text-decoration: none; }
   background: var(--ink);
 }
 
-.home-link { justify-self: end; color: var(--muted); font-size: 14px; }
-.home-link:hover { color: var(--green); }
+.header-links { justify-self: end; display: flex; gap: 16px; color: var(--muted); font-size: 13px; }
+.header-links a:hover { color: var(--green); }
 
 main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64px; }
+
+.stage-switcher {
+  width: max-content;
+  margin: 34px auto 0;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.stage-switcher button {
+  min-width: 98px;
+  min-height: 40px;
+  padding: 8px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.stage-switcher button.active { color: var(--white); background: var(--green); }
 
 .study-intro {
   min-height: 240px;
@@ -145,7 +172,7 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64
 
 .intro-stats div { padding: 24px 8px; text-align: center; }
 .intro-stats div + div { border-left: 1px solid var(--line); }
-.intro-stats dt { font: 700 30px/1 Georgia, serif; }
+.intro-stats dt { font: 700 32px/1 var(--number); font-variant-numeric: tabular-nums; }
 .intro-stats dd { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
 
 .today-strip {
@@ -170,7 +197,7 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64
 .quiz-progress { height: 7px; overflow: hidden; border-radius: 4px; background: #e7eae6; }
 .today-progress span,
 .quiz-progress span { display: block; width: 0; height: 100%; background: var(--green); transition: width 220ms ease; }
-.today-progress strong { font-size: 13px; }
+.today-progress strong { font: 700 14px/1 var(--number); font-variant-numeric: tabular-nums; }
 
 .primary-command,
 .secondary-command,
@@ -256,13 +283,14 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64
 .word-card[data-level="A2"] { border-top-color: var(--blue); }
 .word-card[data-level="B1"],
 .word-card[data-level="B2"],
+.word-card[data-level="B2+"],
 .word-card[data-level="-"] { border-top-color: var(--coral); }
 .word-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 
 .word-top { display: flex; justify-content: space-between; gap: 12px; }
 .word-top > div:last-child { display: flex; gap: 6px; }
-.word-title strong { display: block; overflow-wrap: anywhere; font: 700 27px/1.15 Georgia, serif; }
-.word-title span { display: block; min-height: 21px; margin-top: 5px; color: var(--muted); font-size: 13px; }
+.word-title strong { display: block; overflow-wrap: anywhere; font: 700 27px/1.15 var(--latin); letter-spacing: -0.02em; }
+.word-title span { display: block; min-height: 21px; margin-top: 6px; color: var(--muted); font: 500 13px/1.4 var(--latin); }
 
 .icon-command {
   width: 36px;
@@ -299,7 +327,7 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64
 .hidden { display: none !important; }
 
 .completion { display: flex; align-items: baseline; gap: 7px; }
-.completion strong { font: 700 32px/1 Georgia, serif; }
+.completion strong { font: 700 32px/1 var(--number); font-variant-numeric: tabular-nums; }
 .completion span { color: var(--muted); font-size: 12px; }
 .grammar-filters { width: max-content; margin-bottom: 16px; }
 
@@ -330,7 +358,7 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64
 .grammar-item:hover,
 .grammar-item.active { background: var(--white); }
 .grammar-item.active { box-shadow: inset 4px 0 var(--green); }
-.grammar-number { color: var(--muted); font: 700 13px/1 Georgia, serif; }
+.grammar-number { color: var(--muted); font: 700 13px/1 var(--number); font-variant-numeric: tabular-nums; }
 .grammar-name strong { display: block; font-size: 14px; }
 .grammar-name span { color: var(--muted); font-size: 11px; }
 .grammar-check { color: var(--green); font-size: 14px; }
@@ -363,7 +391,7 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64
 .review-summary { display: grid; grid-template-columns: repeat(4, 1fr); margin-bottom: 54px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .review-summary div { padding: 28px 16px; text-align: center; }
 .review-summary div + div { border-left: 1px solid var(--line); }
-.review-summary strong { display: block; font: 700 36px/1 Georgia, serif; }
+.review-summary strong { display: block; font: 700 36px/1 var(--number); font-variant-numeric: tabular-nums; }
 .review-summary span { display: block; margin-top: 8px; color: var(--muted); font-size: 12px; }
 .review-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .review-title-row h3 { margin: 0; font: 700 24px/1.2 Georgia, serif; }
@@ -395,7 +423,7 @@ button:disabled { cursor: default; }
 @media (max-width: 900px) {
   .study-header { grid-template-columns: 1fr auto; gap: 12px; }
   .view-tabs { grid-column: 1 / -1; grid-row: 2; justify-content: center; }
-  .home-link { grid-column: 2; grid-row: 1; }
+  .header-links { grid-column: 2; grid-row: 1; }
   .study-intro { grid-template-columns: 1fr; gap: 30px; padding: 60px 0 36px; }
   .today-strip { grid-template-columns: 1fr auto; }
   .today-progress { grid-column: 1 / -1; grid-row: 2; }
@@ -410,7 +438,9 @@ button:disabled { cursor: default; }
   .study-header { padding: 10px 16px; }
   .study-brand strong { font-size: 15px; }
   .study-brand small { display: none; }
-  .home-link { font-size: 12px; }
+  .header-links { gap: 10px; font-size: 11px; }
+  .stage-switcher { width: 100%; margin-top: 20px; }
+  .stage-switcher button { min-width: 0; flex: 1; padding-inline: 10px; }
   .view-tabs { width: 100%; }
   .view-tab { flex: 1; padding-inline: 8px; }
   main { width: min(100% - 28px, 1180px); }

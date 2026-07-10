@@ -1,13 +1,77 @@
-const words = Array.isArray(window.VOCABULARY_DATA) ? window.VOCABULARY_DATA : [];
-const grammarTopics = Array.isArray(window.GRAMMAR_DATA) ? window.GRAMMAR_DATA : [];
+const middleWords = Array.isArray(window.VOCABULARY_DATA)
+  ? window.VOCABULARY_DATA.map((word) => ({ ...word, stage: "middle" }))
+  : [];
+const middleKnowledge = Array.isArray(window.GRAMMAR_DATA)
+  ? window.GRAMMAR_DATA.map((topic) => ({ ...topic, stage: "middle" }))
+  : [];
+const extraKnowledge = Array.isArray(window.STAGE_KNOWLEDGE_DATA) ? window.STAGE_KNOWLEDGE_DATA : [];
+const wordSets = {
+  primary: Array.isArray(window.PRIMARY_VOCABULARY_DATA) ? window.PRIMARY_VOCABULARY_DATA : [],
+  middle: middleWords,
+  high: Array.isArray(window.HIGH_SCHOOL_VOCABULARY_DATA) ? window.HIGH_SCHOOL_VOCABULARY_DATA : []
+};
+const knowledgeSets = {
+  primary: extraKnowledge.filter((topic) => topic.stage === "primary"),
+  middle: middleKnowledge,
+  high: extraKnowledge.filter((topic) => topic.stage === "high")
+};
 const storageKey = "brightEnglishStudyV1";
 const pageSize = 24;
 
 const gradeLabels = {
+  "primary-lower": "小学低年级",
+  "primary-upper": "小学高年级",
   grade7: "七年级基础",
   grade8: "八年级进阶",
-  grade9: "九年级拓展"
+  grade9: "九年级拓展",
+  high1: "高中基础",
+  high2: "高中进阶",
+  high3: "高考拓展"
 };
+
+const stageConfig = {
+  primary: {
+    eyebrow: "PRIMARY SCHOOL",
+    heading: "小学英语知识库",
+    description: "从自然拼读和生活词汇开始，在听、读、说、练中建立英语基础。",
+    vocabularyTitle: "小学基础词库",
+    knowledgeTitle: "小学知识库",
+    vocabularyLabel: "小学单词",
+    knowledgeLabel: "知识主题",
+    wordFilters: [["all", "全部"], ["primary-lower", "低年级"], ["primary-upper", "高年级"], ["saved", "已收藏"]],
+    knowledgeFilters: [["all", "全部主题"], ["primary-lower", "低年级"], ["primary-upper", "高年级"]],
+    legend: "Starter 入门 · A1 基础"
+  },
+  middle: {
+    eyebrow: "MIDDLE SCHOOL",
+    heading: "初中英语知识库",
+    description: "系统梳理核心词汇与语法，在搜索、练习和复习中逐步掌握。",
+    vocabularyTitle: "初中核心词库",
+    knowledgeTitle: "初中语法与知识",
+    vocabularyLabel: "初中单词",
+    knowledgeLabel: "知识主题",
+    wordFilters: [["all", "全部"], ["grade7", "七年级"], ["grade8", "八年级"], ["grade9", "九年级"], ["saved", "已收藏"]],
+    knowledgeFilters: [["all", "全部主题"], ["grade7", "七年级"], ["grade8", "八年级"], ["grade9", "九年级"]],
+    legend: "A1 基础 · A2 进阶 · B1+ 拓展"
+  },
+  high: {
+    eyebrow: "HIGH SCHOOL",
+    heading: "高中英语知识库",
+    description: "积累高频词汇，拆解长难句，并练习阅读、语篇与写作方法。",
+    vocabularyTitle: "高中高频词库",
+    knowledgeTitle: "高中知识库",
+    vocabularyLabel: "高中单词",
+    knowledgeLabel: "知识主题",
+    wordFilters: [["all", "全部"], ["high1", "高中基础"], ["high2", "高中进阶"], ["high3", "高考拓展"], ["saved", "已收藏"]],
+    knowledgeFilters: [["all", "全部主题"], ["high1", "高中基础"], ["high2", "高中进阶"], ["high3", "高考拓展"]],
+    legend: "B1 基础 · B2 进阶 · B2+ 拓展"
+  }
+};
+
+const requestedStage = new URLSearchParams(window.location.search).get("stage");
+let activeStage = Object.hasOwn(stageConfig, requestedStage) ? requestedStage : "middle";
+let words = wordSets[activeStage];
+let grammarTopics = knowledgeSets[activeStage];
 
 let activeView = "vocabulary";
 let activeWordFilter = "all";
@@ -56,7 +120,54 @@ function setMembership(listName, id, enabled) {
 }
 
 function wordId(word) {
-  return normalize(word.word);
+  const baseId = normalize(word.word);
+  return word.stage && word.stage !== "middle" ? `${word.stage}:${baseId}` : baseId;
+}
+
+function updateLocation(view = activeView) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("stage", activeStage);
+  url.hash = view;
+  history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function renderStageControls() {
+  const config = stageConfig[activeStage];
+  document.querySelectorAll("[data-stage]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.stage === activeStage);
+  });
+  document.querySelector("#stageEyebrow").textContent = config.eyebrow;
+  document.querySelector("#stageHeading").textContent = config.heading;
+  document.querySelector("#stageDescription").textContent = config.description;
+  document.querySelector("#vocabTitle").textContent = config.vocabularyTitle;
+  document.querySelector("#grammarTitle").textContent = config.knowledgeTitle;
+  document.querySelector("#vocabLabel").textContent = config.vocabularyLabel;
+  document.querySelector("#grammarLabel").textContent = config.knowledgeLabel;
+  document.querySelector("#levelLegend").textContent = config.legend;
+  document.querySelector("#wordFilters").innerHTML = config.wordFilters.map(([value, label], index) => (
+    `<button class="filter-tab ${index === 0 ? "active" : ""}" type="button" data-word-filter="${value}">${label}</button>`
+  )).join("");
+  document.querySelector("#grammarFilters").innerHTML = config.knowledgeFilters.map(([value, label], index) => (
+    `<button class="grammar-filter ${index === 0 ? "active" : ""}" type="button" data-grammar-filter="${value}">${label}</button>`
+  )).join("");
+}
+
+function setStage(stage, updateUrl = true) {
+  if (!Object.hasOwn(stageConfig, stage)) return;
+  activeStage = stage;
+  words = wordSets[stage];
+  grammarTopics = knowledgeSets[stage];
+  activeWordFilter = "all";
+  activeGrammarFilter = "all";
+  selectedGrammarId = grammarTopics[0]?.id || "";
+  visibleWordCount = pageSize;
+  document.querySelector("#wordSearch").value = "";
+  renderStageControls();
+  updateSummary();
+  renderWords();
+  renderGrammarList();
+  renderReviewWords();
+  if (updateUrl) updateLocation();
 }
 
 function getDaySeed() {
@@ -75,17 +186,23 @@ function getDailyGrammar() {
 }
 
 function updateSummary() {
+  const currentWordIds = new Set(words.map(wordId));
+  const currentKnowledgeIds = new Set(grammarTopics.map((topic) => topic.id));
+  const knownCount = studyState.known.filter((id) => currentWordIds.has(id)).length;
+  const reviewCount = studyState.review.filter((id) => currentWordIds.has(id)).length;
+  const savedCount = studyState.saved.filter((id) => currentWordIds.has(id)).length;
+  const knowledgeDoneCount = studyState.grammarDone.filter((id) => currentKnowledgeIds.has(id)).length;
   document.querySelector("#vocabTotal").textContent = words.length;
   document.querySelector("#grammarTotal").textContent = grammarTopics.length;
-  document.querySelector("#masteredTotal").textContent = studyState.known.length;
-  document.querySelector("#knownCount").textContent = studyState.known.length;
-  document.querySelector("#reviewCount").textContent = studyState.review.length;
-  document.querySelector("#savedCount").textContent = studyState.saved.length;
-  document.querySelector("#grammarCount").textContent = studyState.grammarDone.length;
-  document.querySelector("#grammarDoneCount").textContent = studyState.grammarDone.length;
+  document.querySelector("#masteredTotal").textContent = knownCount;
+  document.querySelector("#knownCount").textContent = knownCount;
+  document.querySelector("#reviewCount").textContent = reviewCount;
+  document.querySelector("#savedCount").textContent = savedCount;
+  document.querySelector("#grammarCount").textContent = knowledgeDoneCount;
+  document.querySelector("#grammarDoneCount").textContent = knowledgeDoneCount;
   const reviewButton = document.querySelector("#reviewQuiz");
-  reviewButton.disabled = studyState.review.length === 0;
-  reviewButton.textContent = studyState.review.length ? "复习不会的词" : "暂无待复习词";
+  reviewButton.disabled = reviewCount === 0;
+  reviewButton.textContent = reviewCount ? "复习不会的词" : "暂无待复习词";
 
   const date = new Intl.DateTimeFormat("zh-CN", { month: "long", day: "numeric", weekday: "long" }).format(new Date());
   document.querySelector("#todayDate").textContent = date;
@@ -101,7 +218,7 @@ function updateSummary() {
   document.querySelector("#todayProgressBar").style.width = `${total ? (done / total) * 100 : 0}%`;
   document.querySelector("#todayMessage").textContent = done === total && total > 0
     ? "今天的相遇已经完成，明天会有新的十个词。"
-    : `认识 ${dailyWords.length} 个词，再读懂“${dailyGrammar?.title || "今日语法"}”。`;
+    : `认识 ${dailyWords.length} 个词，再读懂“${dailyGrammar?.title || "今日知识"}”。`;
 }
 
 function getFilteredWords() {
@@ -186,7 +303,7 @@ function switchView(view, updateHash = true) {
     panel.classList.toggle("active", active);
   });
   if (view === "review") renderReviewWords();
-  if (updateHash) history.replaceState(null, "", `#${view}`);
+  if (updateHash) updateLocation(view);
 }
 
 function renderGrammarList() {
@@ -232,11 +349,11 @@ function renderGrammarLesson() {
     <div class="lesson-meta"><span>${escapeHtml(gradeLabels[topic.grade])}</span><span>${escapeHtml(topic.category)}</span></div>
     <h3>${escapeHtml(topic.title)}</h3>
     <p class="lesson-summary">${escapeHtml(topic.summary)}</p>
-    <div class="formula-box"><span>句子骨架</span><code>${escapeHtml(topic.formula)}</code></div>
+    <div class="formula-box"><span>知识要点</span><code>${escapeHtml(topic.formula)}</code></div>
     <div class="example-list">
       ${topic.examples.map((example) => `<p><strong>${escapeHtml(example.en)}</strong><span>${escapeHtml(example.zh)}</span></p>`).join("")}
     </div>
-    <p class="pitfall"><strong>容易忽略：</strong>${escapeHtml(topic.pitfall)}</p>
+    <p class="pitfall"><strong>学习提醒：</strong>${escapeHtml(topic.pitfall)}</p>
     <div class="lesson-practice" data-topic-id="${escapeHtml(topic.id)}">
       <h4>现在试一试</h4>
       <p>${escapeHtml(topic.question)}</p>
@@ -416,21 +533,25 @@ document.querySelectorAll(".view-tab").forEach((button) => {
   button.addEventListener("click", () => switchView(button.dataset.view));
 });
 
-document.querySelectorAll(".filter-tab").forEach((button) => {
-  button.addEventListener("click", () => {
-    activeWordFilter = button.dataset.wordFilter;
-    visibleWordCount = pageSize;
-    document.querySelectorAll(".filter-tab").forEach((item) => item.classList.toggle("active", item === button));
-    renderWords();
-  });
+document.querySelector("#wordFilters").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-word-filter]");
+  if (!button) return;
+  activeWordFilter = button.dataset.wordFilter;
+  visibleWordCount = pageSize;
+  document.querySelectorAll(".filter-tab").forEach((item) => item.classList.toggle("active", item === button));
+  renderWords();
 });
 
-document.querySelectorAll(".grammar-filter").forEach((button) => {
-  button.addEventListener("click", () => {
-    activeGrammarFilter = button.dataset.grammarFilter;
-    document.querySelectorAll(".grammar-filter").forEach((item) => item.classList.toggle("active", item === button));
-    renderGrammarList();
-  });
+document.querySelector("#grammarFilters").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-grammar-filter]");
+  if (!button) return;
+  activeGrammarFilter = button.dataset.grammarFilter;
+  document.querySelectorAll(".grammar-filter").forEach((item) => item.classList.toggle("active", item === button));
+  renderGrammarList();
+});
+
+document.querySelectorAll("[data-stage]").forEach((button) => {
+  button.addEventListener("click", () => setStage(button.dataset.stage));
 });
 
 document.querySelector("#wordSearch").addEventListener("input", () => {
@@ -491,7 +612,7 @@ document.addEventListener("click", (event) => {
     if (selected !== topic.answer) lessonAnswer.classList.add("wrong");
     practice.querySelector(".lesson-feedback").textContent = selected === topic.answer
       ? `答对了。${topic.explanation}`
-      : `再看一下句子骨架。${topic.explanation}`;
+      : `再看一下知识要点。${topic.explanation}`;
     if (selected === topic.answer) {
       setMembership("grammarDone", topic.id, true);
       saveState();
@@ -514,9 +635,6 @@ window.addEventListener("hashchange", () => {
   if (["vocabulary", "grammar", "review"].includes(requested)) switchView(requested, false);
 });
 
-updateSummary();
-renderWords();
-renderGrammarList();
-renderReviewWords();
+setStage(activeStage, false);
 const initialView = location.hash.replace("#", "");
 switchView(["vocabulary", "grammar", "review"].includes(initialView) ? initialView : "vocabulary", false);

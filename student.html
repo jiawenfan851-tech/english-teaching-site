@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <title>学生中心 | Bright English Studio</title>
+    <link rel="stylesheet" href="./student.css" />
+  </head>
+  <body>
+    <header class="student-header">
+      <a class="student-brand" href="./index.html" aria-label="返回 Bright English 首页">
+        <span class="brand-mark">B</span>
+        <span><strong>Bright English</strong><small>学生中心</small></span>
+      </a>
+      <nav aria-label="学生中心导航">
+        <a href="./learn.html?stage=primary">小学</a>
+        <a href="./learn.html?stage=middle">初中</a>
+        <a href="./learn.html?stage=high">高中</a>
+      </nav>
+      <button class="logout-button" id="studentLogout" type="button">退出登录</button>
+    </header>
+
+    <main>
+      <section class="student-hero">
+        <div>
+          <span class="student-kicker">STUDENT HOME</span>
+          <h1>你好，<span id="studentName">FJW</span></h1>
+          <p>从适合自己的学段开始，今天也向前走一点。</p>
+        </div>
+        <a class="start-button" href="./learn.html?stage=middle">继续学习</a>
+      </section>
+
+      <section class="progress-panel" aria-labelledby="progressTitle">
+        <div class="section-title">
+          <span>学习记录</span>
+          <h2 id="progressTitle">你的学习进度</h2>
+        </div>
+        <dl class="progress-grid">
+          <div><dt id="knownTotal">0</dt><dd>已掌握单词</dd></div>
+          <div><dt id="reviewTotal">0</dt><dd>待复习单词</dd></div>
+          <div><dt id="savedTotal">0</dt><dd>收藏单词</dd></div>
+          <div><dt id="knowledgeTotal">0</dt><dd>完成知识主题</dd></div>
+        </dl>
+      </section>
+
+      <section class="stage-section" aria-labelledby="stageTitle">
+        <div class="section-title">
+          <span>选择学段</span>
+          <h2 id="stageTitle">进入你的知识库</h2>
+        </div>
+        <div class="stage-grid">
+          <a class="stage-card primary" href="./learn.html?stage=primary">
+            <span>PRIMARY</span>
+            <h3>小学英语</h3>
+            <p>自然拼读、生活词汇、基础句型与阅读启蒙</p>
+            <b>开始学习 →</b>
+          </a>
+          <a class="stage-card middle" href="./learn.html?stage=middle">
+            <span>MIDDLE SCHOOL</span>
+            <h3>初中英语</h3>
+            <p>核心词汇、语法体系、即时练习与个人复习</p>
+            <b>继续学习 →</b>
+          </a>
+          <a class="stage-card high" href="./learn.html?stage=high">
+            <span>HIGH SCHOOL</span>
+            <h3>高中英语</h3>
+            <p>高频词汇、长难句、阅读策略与写作表达</p>
+            <b>开始学习 →</b>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <script src="./student-auth.js"></script>
+    <script src="./student.js"></script>
+  </body>
+</html>

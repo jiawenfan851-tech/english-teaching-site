@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="初中核心词汇、语法图谱、即时练习与个人复习。" />
+    <meta name="description" content="小学、初中和高中英语单词、知识主题、即时练习与个人复习。" />
     <meta property="og:title" content="英语学习馆 | Bright English" />
-    <meta property="og:description" content="1603 个初中核心词，38 个语法主题，把知识学成自己的语言。" />
+    <meta property="og:description" content="覆盖小学、初中和高中的英语单词与知识主题，把知识学成自己的语言。" />
     <meta property="og:image" content="https://jiawenfan851-tech.github.io/english-teaching-site/assets/og-learning.jpg" />
     <meta property="og:url" content="https://jiawenfan851-tech.github.io/english-teaching-site/learn.html" />
     <meta property="og:type" content="website" />
@@ -23,21 +23,31 @@
       </a>
       <nav class="view-tabs" aria-label="学习馆导航">
         <button class="view-tab active" type="button" data-view="vocabulary">词汇</button>
-        <button class="view-tab" type="button" data-view="grammar">语法</button>
+        <button class="view-tab" type="button" data-view="grammar">知识</button>
         <button class="view-tab" type="button" data-view="review">我的复习</button>
       </nav>
-      <a class="home-link" href="./index.html">返回首页</a>
+      <div class="header-links">
+        <a href="./student.html">学生中心</a>
+        <a href="./index.html">返回首页</a>
+      </div>
     </header>
 
     <main>
+      <nav class="stage-switcher" aria-label="选择学习阶段">
+        <button type="button" data-stage="primary">小学</button>
+        <button class="active" type="button" data-stage="middle">初中</button>
+        <button type="button" data-stage="high">高中</button>
+      </nav>
+
       <section class="study-intro">
         <div>
-          <p class="eyebrow">LEARNING COMMONS</p>
-          <h1>把知识学成自己的语言</h1>
+          <p class="eyebrow" id="stageEyebrow">MIDDLE SCHOOL</p>
+          <h1 id="stageHeading">初中英语知识库</h1>
+          <p id="stageDescription">系统梳理核心词汇与语法，在搜索、练习和复习中逐步掌握。</p>
         </div>
         <dl class="intro-stats" aria-label="学习内容概览">
-          <div><dt id="vocabTotal">1603</dt><dd>初中核心词</dd></div>
-          <div><dt id="grammarTotal">38</dt><dd>语法主题</dd></div>
+          <div><dt id="vocabTotal">0</dt><dd id="vocabLabel">阶段单词</dd></div>
+          <div><dt id="grammarTotal">0</dt><dd id="grammarLabel">知识主题</dd></div>
           <div><dt id="masteredTotal">0</dt><dd>已经掌握</dd></div>
         </dl>
       </section>
@@ -65,7 +75,7 @@
         </div>
 
         <div class="word-controls">
-          <div class="filter-tabs" role="group" aria-label="词汇范围">
+          <div class="filter-tabs" id="wordFilters" role="group" aria-label="词汇范围">
             <button class="filter-tab active" type="button" data-word-filter="all">全部</button>
             <button class="filter-tab" type="button" data-word-filter="grade7">七年级基础</button>
             <button class="filter-tab" type="button" data-word-filter="grade8">八年级进阶</button>
@@ -80,7 +90,7 @@
 
         <div class="result-line">
           <p id="wordResultCount" aria-live="polite"></p>
-          <p><span class="level-dot level-a1"></span>A1 基础 <span class="level-dot level-a2"></span>A2 进阶 <span class="level-dot level-b1"></span>B1+ 拓展</p>
+          <p id="levelLegend"><span class="level-dot level-a1"></span>A1 基础 <span class="level-dot level-a2"></span>A2 进阶 <span class="level-dot level-b1"></span>B1+ 拓展</p>
         </div>
         <div class="word-grid" id="wordGrid"></div>
         <button class="load-more hidden" type="button" id="loadMoreWords">继续浏览</button>
@@ -89,13 +99,13 @@
       <section class="study-view" id="grammarView" data-panel="grammar" aria-labelledby="grammarTitle" hidden>
         <div class="section-heading">
           <div>
-            <p class="eyebrow">GRAMMAR MAP</p>
-            <h2 id="grammarTitle">初中语法图谱</h2>
+            <p class="eyebrow">KNOWLEDGE</p>
+            <h2 id="grammarTitle">初中知识库</h2>
           </div>
           <div class="completion"><strong id="grammarDoneCount">0</strong><span>已读懂</span></div>
         </div>
 
-        <div class="grammar-filters" role="group" aria-label="语法年级">
+        <div class="grammar-filters" id="grammarFilters" role="group" aria-label="知识范围">
           <button class="grammar-filter active" type="button" data-grammar-filter="all">全部主题</button>
           <button class="grammar-filter" type="button" data-grammar-filter="grade7">七年级</button>
           <button class="grammar-filter" type="button" data-grammar-filter="grade8">八年级</button>
@@ -103,7 +113,7 @@
         </div>
 
         <div class="grammar-workspace">
-          <aside class="grammar-index" aria-label="语法主题列表">
+          <aside class="grammar-index" aria-label="知识主题列表">
             <div id="grammarList"></div>
           </aside>
           <article class="grammar-lesson" id="grammarLesson" aria-live="polite"></article>
@@ -122,7 +132,7 @@
           <div><strong id="knownCount">0</strong><span>已掌握词汇</span></div>
           <div><strong id="reviewCount">0</strong><span>待复习词汇</span></div>
           <div><strong id="savedCount">0</strong><span>收藏词汇</span></div>
-          <div><strong id="grammarCount">0</strong><span>完成语法</span></div>
+          <div><strong id="grammarCount">0</strong><span>完成知识主题</span></div>
         </div>
         <div class="review-section">
           <div class="review-title-row"><h3>待复习词汇</h3><span id="reviewHint"></span></div>
@@ -152,6 +162,7 @@
 
     <script src="./data/vocabulary.js"></script>
     <script src="./data/grammar.js"></script>
+    <script src="./data/stage-content.js"></script>
     <script src="./learn.js"></script>
   </body>
 </html>
