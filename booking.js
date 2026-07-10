@@ -14,6 +14,7 @@
   const optionalContact = FORM.elements.namedItem("联系电话或邮箱");
   const originalButtonText = submitButton ? submitButton.textContent : "";
   const fallbackEmail = "mailto:jiawenfan851@gmail.com?subject=英语课程预约咨询";
+  const submitEndpoint = FORM.dataset.ajaxEndpoint || FORM.action;
   let isSubmitting = false;
 
   function getLocalDateString(date) {
@@ -93,6 +94,10 @@
       return true;
     }
 
+    if (Array.isArray(payload.errors) && payload.errors.length > 0) {
+      return true;
+    }
+
     const status = String(payload.status || "").trim().toLowerCase();
     return ["error", "failed", "failure"].includes(status);
   }
@@ -153,17 +158,14 @@
       const controller = new AbortController();
       timeoutId = window.setTimeout(() => controller.abort(), 15000);
 
-      const response = await window.fetch(
-        "https://formsubmit.co/ajax/jiawenfan851@gmail.com",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json"
-          },
-          body: new FormData(FORM),
-          signal: controller.signal
-        }
-      );
+      const response = await window.fetch(submitEndpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json"
+        },
+        body: new FormData(FORM),
+        signal: controller.signal
+      });
 
       if (!response.ok) {
         const error = new Error("HTTP response was not successful");
@@ -179,7 +181,7 @@
       }
 
       if (hasExplicitFailure(payload)) {
-        const error = new Error("FormSubmit returned an explicit failure");
+        const error = new Error("Submission service returned an explicit failure");
         error.kind = "explicit";
         throw error;
       }
