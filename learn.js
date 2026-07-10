@@ -1,13 +1,10 @@
-const middleWords = Array.isArray(window.VOCABULARY_DATA)
-  ? window.VOCABULARY_DATA.map((word) => ({ ...word, stage: "middle" }))
-  : [];
 const middleKnowledge = Array.isArray(window.GRAMMAR_DATA)
   ? window.GRAMMAR_DATA.map((topic) => ({ ...topic, stage: "middle" }))
   : [];
 const extraKnowledge = Array.isArray(window.STAGE_KNOWLEDGE_DATA) ? window.STAGE_KNOWLEDGE_DATA : [];
 const wordSets = {
   primary: Array.isArray(window.PRIMARY_VOCABULARY_DATA) ? window.PRIMARY_VOCABULARY_DATA : [],
-  middle: middleWords,
+  middle: Array.isArray(window.MIDDLE_SCHOOL_VOCABULARY_DATA) ? window.MIDDLE_SCHOOL_VOCABULARY_DATA : [],
   high: Array.isArray(window.HIGH_SCHOOL_VOCABULARY_DATA) ? window.HIGH_SCHOOL_VOCABULARY_DATA : []
 };
 const knowledgeSets = {
@@ -19,13 +16,15 @@ const storageKey = "brightEnglishStudyV1";
 const pageSize = 24;
 
 const gradeLabels = {
+  primary: "小学课标二级",
+  middle: "义务教育课标三级",
   "primary-lower": "小学低年级",
   "primary-upper": "小学高年级",
-  grade7: "七年级基础",
-  grade8: "八年级进阶",
-  grade9: "九年级拓展",
-  high1: "高中基础",
-  high2: "高中进阶",
+  grade7: "七年级知识",
+  grade8: "八年级知识",
+  grade9: "九年级知识",
+  high1: "高中必修",
+  high2: "选择性必修",
   high3: "高考拓展"
 };
 
@@ -34,37 +33,37 @@ const stageConfig = {
     eyebrow: "PRIMARY SCHOOL",
     heading: "小学英语知识库",
     description: "从自然拼读和生活词汇开始，在听、读、说、练中建立英语基础。",
-    vocabularyTitle: "小学基础词库",
+    vocabularyTitle: "小学课标词汇",
     knowledgeTitle: "小学知识库",
     vocabularyLabel: "小学单词",
     knowledgeLabel: "知识主题",
-    wordFilters: [["all", "全部"], ["primary-lower", "低年级"], ["primary-upper", "高年级"], ["saved", "已收藏"]],
+    wordFilters: [["all", "课标 505 词"], ["saved", "已收藏"]],
     knowledgeFilters: [["all", "全部主题"], ["primary-lower", "低年级"], ["primary-upper", "高年级"]],
-    legend: "Starter 入门 · A1 基础"
+    legend: "《义务教育英语课程标准（2022年版）》二级词汇"
   },
   middle: {
     eyebrow: "MIDDLE SCHOOL",
     heading: "初中英语知识库",
     description: "系统梳理核心词汇与语法，在搜索、练习和复习中逐步掌握。",
-    vocabularyTitle: "初中核心词库",
+    vocabularyTitle: "义务教育课标词汇",
     knowledgeTitle: "初中语法与知识",
     vocabularyLabel: "初中单词",
     knowledgeLabel: "知识主题",
-    wordFilters: [["all", "全部"], ["grade7", "七年级"], ["grade8", "八年级"], ["grade9", "九年级"], ["saved", "已收藏"]],
+    wordFilters: [["all", "课标三级 1600 词"], ["saved", "已收藏"]],
     knowledgeFilters: [["all", "全部主题"], ["grade7", "七年级"], ["grade8", "八年级"], ["grade9", "九年级"]],
-    legend: "A1 基础 · A2 进阶 · B1+ 拓展"
+    legend: "《义务教育英语课程标准（2022年版）》三级词汇"
   },
   high: {
     eyebrow: "HIGH SCHOOL",
     heading: "高中英语知识库",
     description: "积累高频词汇，拆解长难句，并练习阅读、语篇与写作方法。",
-    vocabularyTitle: "高中高频词库",
+    vocabularyTitle: "高中课标词汇",
     knowledgeTitle: "高中知识库",
-    vocabularyLabel: "高中单词",
+    vocabularyLabel: "高中新增词汇",
     knowledgeLabel: "知识主题",
-    wordFilters: [["all", "全部"], ["high1", "高中基础"], ["high2", "高中进阶"], ["high3", "高考拓展"], ["saved", "已收藏"]],
+    wordFilters: [["all", "新增 1500 词"], ["high1", "必修"], ["high2", "选择性必修"], ["saved", "已收藏"]],
     knowledgeFilters: [["all", "全部主题"], ["high1", "高中基础"], ["high2", "高中进阶"], ["high3", "高考拓展"]],
-    legend: "B1 基础 · B2 进阶 · B2+ 拓展"
+    legend: "《普通高中英语课程标准（2017年版2020年修订）》新增词汇"
   }
 };
 

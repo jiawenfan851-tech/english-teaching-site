@@ -69,17 +69,14 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">VOCABULARY</p>
-            <h2 id="vocabTitle">初中核心词库</h2>
+            <h2 id="vocabTitle">义务教育课标词汇</h2>
           </div>
           <button class="secondary-command" type="button" id="startVocabQuiz">开始 10 词小测</button>
         </div>
 
         <div class="word-controls">
           <div class="filter-tabs" id="wordFilters" role="group" aria-label="词汇范围">
-            <button class="filter-tab active" type="button" data-word-filter="all">全部</button>
-            <button class="filter-tab" type="button" data-word-filter="grade7">七年级基础</button>
-            <button class="filter-tab" type="button" data-word-filter="grade8">八年级进阶</button>
-            <button class="filter-tab" type="button" data-word-filter="grade9">九年级拓展</button>
+            <button class="filter-tab active" type="button" data-word-filter="all">课标三级 1600 词</button>
             <button class="filter-tab" type="button" data-word-filter="saved">已收藏</button>
           </div>
           <label class="word-search">
@@ -90,7 +87,7 @@
 
         <div class="result-line">
           <p id="wordResultCount" aria-live="polite"></p>
-          <p id="levelLegend"><span class="level-dot level-a1"></span>A1 基础 <span class="level-dot level-a2"></span>A2 进阶 <span class="level-dot level-b1"></span>B1+ 拓展</p>
+          <p id="levelLegend">《义务教育英语课程标准（2022年版）》三级词汇</p>
         </div>
         <div class="word-grid" id="wordGrid"></div>
         <button class="load-more hidden" type="button" id="loadMoreWords">继续浏览</button>
@@ -160,9 +157,9 @@
       </section>
     </div>
 
-    <script src="./data/vocabulary.js"></script>
     <script src="./data/grammar.js"></script>
     <script src="./data/stage-content.js"></script>
+    <script src="./data/curriculum-vocabulary.js"></script>
     <script src="./learn.js"></script>
   </body>
 </html>
