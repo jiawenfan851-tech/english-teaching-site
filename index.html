@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="面向中小学生的英语成长课程，以及可以每天使用的初中词汇与语法学习馆。" />
-    <meta property="og:title" content="Bright English | 嘉文英语成长课程" />
+    <meta name="description" content="面向中小学生的英语成长课程与初中英语学习馆。" />
+    <meta property="og:title" content="Bright English | 中小学英语成长课程" />
     <meta property="og:description" content="让英语学习，成为清澈而有光的成长。" />
     <meta property="og:image" content="https://jiawenfan851-tech.github.io/english-teaching-site/assets/og-learning.jpg" />
+    <meta property="og:url" content="https://jiawenfan851-tech.github.io/english-teaching-site/" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://jiawenfan851-tech.github.io/english-teaching-site/" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./site.webmanifest" />
     <title>Bright English Studio | 中小学英语成长课程</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -345,7 +349,7 @@ h3 {
 }
 
 .level-card {
-  min-height: 250px;
+  min-height: 190px;
   padding: 30px;
 }
 
@@ -785,6 +789,22 @@ select {
   text-decoration: underline;
 }
 
+.consent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.consent input {
+  width: 18px;
+  min-height: 18px;
+  flex: 0 0 18px;
+  accent-color: var(--teal);
+}
+
 @media (max-width: 900px) {
   .topbar {
     align-items: flex-start;
@@ -892,7 +912,6 @@ select {
         <a href="#courses">课程</a>
         <a href="#daily">每日一句</a>
         <a href="./learn.html">学习馆</a>
-        <a href="#why">方法</a>
         <a href="#contact">预约</a>
       </nav>
       <button class="nav-action" id="loginOpen" type="button">老师登录</button>
@@ -905,7 +924,7 @@ select {
         <div class="hero-content">
           <p class="eyebrow">小学 · 初中 · 高中</p>
           <h1>让英语学习，成为清晰而有力的成长。</h1>
-          <p class="hero-copy">面向中小学生的英语成长课程，从词汇、语法、阅读到写作表达，循序渐进地建立语言能力，也陪伴孩子看见自己的进步。</p>
+          <p class="hero-copy">词汇、语法、阅读与写作，一步一步学得扎实。</p>
           <div class="hero-actions">
             <a class="primary-btn" href="#contact">预约试听</a>
             <a class="secondary-btn" href="./learn.html">进入学习馆</a>
@@ -923,7 +942,6 @@ select {
         <div class="daily-copy">
           <p class="eyebrow">Daily Sentence</p>
           <h2>每日一句</h2>
-          <p>每天打开网页，读一句优美英文。不是为了记住很多，而是让语言悄然进入生活。</p>
         </div>
         <article class="quote-card" aria-live="polite">
           <span id="dailyDate">Today</span>
@@ -941,17 +959,14 @@ select {
           <article class="level-card primary">
             <span class="tag">小学</span>
             <h3>听读与语感</h3>
-            <p>从自然拼读、日常表达和绘本阅读开始，让孩子在声音、图像和故事里亲近英语。</p>
           </article>
           <article class="level-card">
             <span class="tag">初中</span>
             <h3>体系与表达</h3>
-            <p>以校内知识为主线，打通词汇、语法、阅读和写作，让学生不仅会做题，也会表达。</p>
           </article>
           <article class="level-card accent">
             <span class="tag">高中</span>
             <h3>思维与迁移</h3>
-            <p>在阅读深度、写作结构和考试策略中训练语言思维，为更高阶段的学习蓄力。</p>
           </article>
         </div>
       </section>
@@ -960,43 +975,18 @@ select {
         <div class="section-head">
           <p class="eyebrow">Learning Commons</p>
           <h2>把一节课的理解，带到每天的练习里</h2>
-          <p>初中核心词汇与语法脉络已经整理成一座开放的学习馆。可以查，也可以练；记住的与暂时不会的，都有自己的位置。</p>
         </div>
         <div class="learning-entry">
           <a href="./learn.html#vocabulary">
             <span>01</span>
-            <div><strong>1603 词 · 初中核心词库</strong><p>按阶段检索、朗读、收藏，把不熟的词留到下一次复习。</p></div>
+            <div><strong>1603 词 · 初中核心词库</strong></div>
             <b aria-hidden="true">→</b>
           </a>
           <a href="./learn.html#grammar">
             <span>02</span>
-            <div><strong>38 章 · 初中语法图谱</strong><p>从句子骨架到复合句，每一章都有讲解、例句和即时小测。</p></div>
+            <div><strong>38 章 · 初中语法图谱</strong></div>
             <b aria-hidden="true">→</b>
           </a>
-        </div>
-      </section>
-
-      <section id="why" class="section why-section">
-        <div class="section-head">
-          <p class="eyebrow">Learning Method</p>
-          <h2>温和而简单的方法，清晰也有耐心</h2>
-        </div>
-        <div class="why-grid">
-          <article>
-            <span>01</span>
-            <h3>先看见薄弱点</h3>
-            <p>从词汇、语法、阅读和表达中找准卡点，再安排真正需要的练习。</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>把方法说明白</h3>
-            <p>不只给答案，更说清为什么这么想、怎样推导到下一步题目。</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>让进步可追踪</h3>
-            <p>课后标注重点和下一步安排，让学生和家长都知道努力的方向。</p>
-          </article>
         </div>
       </section>
 
@@ -1004,7 +994,6 @@ select {
         <div>
           <p class="eyebrow">Book a Trial</p>
           <h2>预约一节试听课</h2>
-          <p>留下学生姓名、年级、学习目标和微信号，老师会根据情况沟通合适的学习安排。</p>
         </div>
         <form id="contactForm" class="contact-form" action="https://formsubmit.co/jiawenfan851@gmail.com" method="POST" accept-charset="UTF-8">
           <input type="hidden" name="_subject" value="新的英语课程预约" />
@@ -1033,6 +1022,10 @@ select {
             微信号
             <input name="微信号" type="text" placeholder="请输入学生或家长微信号" required />
           </label>
+          <label class="consent">
+            <input name="信息使用确认" type="checkbox" value="同意用于预约联系" required />
+            <span>同意将以上信息用于本次预约联系</span>
+          </label>
           <button class="primary-btn" type="submit">提交预约</button>
           <p class="booking-fallback">若提交页面没有打开，可<a href="mailto:jiawenfan851@gmail.com?subject=英语课程预约">直接发送邮件</a>。</p>
         </form>
@@ -1050,7 +1043,6 @@ select {
         <button class="modal-close" type="button" aria-label="关闭登录窗口" data-close-login>×</button>
         <p class="eyebrow">Teacher Login</p>
         <h2 id="loginTitle">老师登录</h2>
-        <p class="login-note">登录后进入教师管理面板。</p>
         <form id="loginForm" class="login-form">
           <label>
             账号
@@ -1066,12 +1058,8 @@ select {
       </section>
     </div>
 
+    <script src="./auth.js"></script>
     <script>
-const teacherAccount = {
-  username: "wjwjwj",
-  password: "wj123"
-};
-
 const loginOpenButton = document.querySelector("#loginOpen");
 const footerLoginOpenButton = document.querySelector("#footerLoginOpen");
 const loginModal = document.querySelector("#loginModal");
@@ -1241,7 +1229,7 @@ function closeLoginModal() {
 }
 
 function enterTeacherDashboard() {
-  localStorage.setItem("teacherLoggedIn", "true");
+  window.TeacherAuth.startSession();
   window.location.href = "./teacher.html";
 }
 
@@ -1252,13 +1240,13 @@ document.querySelectorAll("[data-close-login]").forEach((button) => {
   button.addEventListener("click", closeLoginModal);
 });
 
-loginForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const username = usernameInput.value.trim();
   const password = passwordInput.value;
 
-  if (username === teacherAccount.username && password === teacherAccount.password) {
+  if (await window.TeacherAuth.verify(username, password)) {
     enterTeacherDashboard();
     return;
   }

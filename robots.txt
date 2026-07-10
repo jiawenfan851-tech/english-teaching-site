@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /teacher.html
+
+Sitemap: https://jiawenfan851-tech.github.io/english-teaching-site/sitemap.xml

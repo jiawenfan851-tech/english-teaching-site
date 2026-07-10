@@ -1,0 +1,16 @@
+{
+  "name": "Bright English",
+  "short_name": "Bright English",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fbfaf6",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
