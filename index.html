@@ -1259,7 +1259,7 @@ button:focus-visible {
           <h2>预约一节试听课</h2>
           <p>留下学生情况与合适的时间，老师会与你联系确认试听安排。</p>
         </div>
-        <form id="contactForm" class="contact-form" action="mailto:jiawenfan851@gmail.com" method="POST" enctype="text/plain" accept-charset="UTF-8">
+        <form id="contactForm" class="contact-form" action="mailto:jiawenfan851@gmail.com" method="POST" enctype="text/plain" accept-charset="UTF-8" data-booking-endpoint="./api/booking">
           <input type="hidden" name="subject" value="新的英语课程预约" />
           <input class="form-honey" type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
           <label>
@@ -1317,9 +1317,9 @@ button:focus-visible {
             <input name="信息使用确认" type="checkbox" value="同意用于预约联系" required />
             <span>同意将以上信息用于本次预约联系</span>
           </label>
-          <button class="primary-btn" type="submit">通过邮件发送预约</button>
+          <button class="primary-btn" type="submit">提交预约</button>
           <p id="bookingStatus" class="booking-status" role="status" aria-live="polite"></p>
-          <p class="booking-fallback">无需使用境外表单服务。点击后请在打开的邮件应用中确认发送。</p>
+          <p class="booking-fallback">提交成功后，老师会通过微信或预留联系方式与你确认。</p>
         </form>
       </section>
     </main>
