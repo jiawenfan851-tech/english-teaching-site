@@ -5,9 +5,4 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://jiawenfan851-tech.github.io/english-teaching-site/learn.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>

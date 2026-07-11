@@ -6,6 +6,12 @@
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <title>学生中心 | Bright English Studio</title>
+    <script src="./student-auth.js"></script>
+    <script>
+      if (!window.StudentAuth?.isSessionActive()) {
+        window.location.replace("./index.html?studentLogin=1&return=student.html");
+      }
+    </script>
     <link rel="stylesheet" href="./student.css" />
   </head>
   <body>
@@ -18,6 +24,8 @@
         <a href="./learn.html?stage=primary">小学</a>
         <a href="./learn.html?stage=middle">初中</a>
         <a href="./learn.html?stage=high">高中</a>
+        <a href="./learn.html?stage=postgraduate">考研</a>
+        <a href="./learn.html?stage=ielts">雅思</a>
       </nav>
       <button class="logout-button" id="studentLogout" type="button">退出登录</button>
     </header>
@@ -66,14 +74,25 @@
           <a class="stage-card high" href="./learn.html?stage=high">
             <span>HIGH SCHOOL</span>
             <h3>高中英语</h3>
-            <p>课标新增 1500 词、长难句、阅读策略与写作表达</p>
+            <p>高中课标完整 3000 词、长难句、阅读策略与写作表达</p>
+            <b>开始学习 →</b>
+          </a>
+          <a class="stage-card postgraduate" href="./learn.html?stage=postgraduate">
+            <span>POSTGRADUATE</span>
+            <h3>考研英语</h3>
+            <p>4801 个考研备考词汇，支持搜索、收藏、复习与小测</p>
+            <b>开始学习 →</b>
+          </a>
+          <a class="stage-card ielts" href="./learn.html?stage=ielts">
+            <span>IELTS</span>
+            <h3>雅思英语</h3>
+            <p>5040 个雅思备考词汇，循序积累阅读与表达能力</p>
             <b>开始学习 →</b>
           </a>
         </div>
       </section>
     </main>
 
-    <script src="./student-auth.js"></script>
     <script src="./student.js"></script>
   </body>
 </html>

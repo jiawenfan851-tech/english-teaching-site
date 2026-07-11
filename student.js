@@ -2,7 +2,7 @@
   "use strict";
 
   if (!window.StudentAuth?.isSessionActive()) {
-    window.location.replace("./index.html?studentLogin=1");
+    window.location.replace("./index.html?studentLogin=1&return=student.html");
     return;
   }
 

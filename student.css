@@ -74,11 +74,13 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 64px 0 90
 .progress-grid dt { font: 700 38px/1 var(--number); font-variant-numeric: tabular-nums; }
 .progress-grid dd { margin: 10px 0 0; color: var(--muted); font-size: 12px; }
 
-.stage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.stage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
 .stage-card { min-height: 260px; padding: 30px; display: flex; flex-direction: column; border: 1px solid var(--line); border-top: 4px solid var(--green); background: var(--white); box-shadow: var(--shadow); transition: transform 160ms ease; }
 .stage-card:hover { transform: translateY(-4px); }
 .stage-card.primary { border-top-color: #d8a925; }
 .stage-card.high { border-top-color: var(--blue); }
+.stage-card.postgraduate { border-top-color: var(--coral); }
+.stage-card.ielts { border-top-color: #7a5b8f; }
 .stage-card > span { color: var(--coral); }
 .stage-card h3 { margin: 22px 0 10px; font: 700 28px/1.2 Georgia, "Songti SC", serif; }
 .stage-card p { margin: 0; color: var(--muted); }
