@@ -5,13 +5,22 @@ const extraKnowledge = Array.isArray(window.STAGE_KNOWLEDGE_DATA) ? window.STAGE
 const wordSets = {
   primary: Array.isArray(window.PRIMARY_VOCABULARY_DATA) ? window.PRIMARY_VOCABULARY_DATA : [],
   middle: Array.isArray(window.MIDDLE_SCHOOL_VOCABULARY_DATA) ? window.MIDDLE_SCHOOL_VOCABULARY_DATA : [],
-  high: Array.isArray(window.HIGH_SCHOOL_VOCABULARY_DATA) ? window.HIGH_SCHOOL_VOCABULARY_DATA : []
+  high: Array.isArray(window.HIGH_SCHOOL_VOCABULARY_DATA) ? window.HIGH_SCHOOL_VOCABULARY_DATA : [],
+  postgraduate: Array.isArray(window.POSTGRADUATE_VOCABULARY_DATA) ? window.POSTGRADUATE_VOCABULARY_DATA : [],
+  ielts: Array.isArray(window.IELTS_VOCABULARY_DATA) ? window.IELTS_VOCABULARY_DATA : []
 };
 const knowledgeSets = {
   primary: extraKnowledge.filter((topic) => topic.stage === "primary"),
   middle: middleKnowledge,
-  high: extraKnowledge.filter((topic) => topic.stage === "high")
+  high: extraKnowledge.filter((topic) => topic.stage === "high"),
+  postgraduate: [],
+  ielts: []
 };
+const wordCollisionCounts = Object.values(wordSets).flat().reduce((counts, word) => {
+  const key = `${word.stage || "middle"}:${String(word.word || "").trim().toLowerCase()}`;
+  counts.set(key, (counts.get(key) || 0) + 1);
+  return counts;
+}, new Map());
 const storageKey = "brightEnglishStudyV1";
 const pageSize = 24;
 
@@ -23,9 +32,12 @@ const gradeLabels = {
   grade7: "七年级知识",
   grade8: "八年级知识",
   grade9: "九年级知识",
+  high0: "义务教育基础",
   high1: "高中必修",
   high2: "选择性必修",
-  high3: "高考拓展"
+  high3: "高考拓展",
+  postgraduate: "考研词汇",
+  ielts: "雅思备考词汇"
 };
 
 const stageConfig = {
@@ -59,11 +71,35 @@ const stageConfig = {
     description: "积累高频词汇，拆解长难句，并练习阅读、语篇与写作方法。",
     vocabularyTitle: "高中课标词汇",
     knowledgeTitle: "高中知识库",
-    vocabularyLabel: "高中新增词汇",
+    vocabularyLabel: "高中课标词汇",
     knowledgeLabel: "知识主题",
-    wordFilters: [["all", "新增 1500 词"], ["high1", "必修"], ["high2", "选择性必修"], ["saved", "已收藏"]],
+    wordFilters: [["all", "课标 3000 词"], ["high0", "基础"], ["high1", "必修"], ["high2", "选择性必修"], ["saved", "已收藏"]],
     knowledgeFilters: [["all", "全部主题"], ["high1", "高中基础"], ["high2", "高中进阶"], ["high3", "高考拓展"]],
-    legend: "《普通高中英语课程标准（2017年版2020年修订）》新增词汇"
+    legend: "《普通高中英语课程标准（2017年版2020年修订）》完整 3000 词"
+  },
+  postgraduate: {
+    eyebrow: "POSTGRADUATE ENTRANCE EXAM",
+    heading: "考研英语词库",
+    description: "覆盖阅读、完形、翻译与写作中常见的考研英语词汇。",
+    vocabularyTitle: "考研英语词汇",
+    knowledgeTitle: "考研备考",
+    vocabularyLabel: "考研单词",
+    knowledgeLabel: "备考专题",
+    wordFilters: [["all", "考研 4801 词"], ["saved", "已收藏"]],
+    knowledgeFilters: [],
+    legend: "ECDICT 考研考试标签词汇（MIT License）"
+  },
+  ielts: {
+    eyebrow: "IELTS PREPARATION",
+    heading: "雅思备考词库",
+    description: "面向雅思阅读、听力、口语与写作的综合备考词汇。",
+    vocabularyTitle: "雅思备考词汇",
+    knowledgeTitle: "雅思备考",
+    vocabularyLabel: "雅思单词",
+    knowledgeLabel: "备考专题",
+    wordFilters: [["all", "雅思备考 5040 词"], ["saved", "已收藏"]],
+    knowledgeFilters: [],
+    legend: "ECDICT 雅思标签词汇；并非 IELTS 官方唯一词表"
   }
 };
 
@@ -119,8 +155,11 @@ function setMembership(listName, id, enabled) {
 }
 
 function wordId(word) {
-  const baseId = normalize(word.word);
-  return word.stage && word.stage !== "middle" ? `${word.stage}:${baseId}` : baseId;
+  const stage = word.stage || "middle";
+  const normalized = normalize(word.word);
+  const collisionKey = `${stage}:${normalized}`;
+  const baseId = wordCollisionCounts.get(collisionKey) > 1 ? `${normalized}:${word.word}` : normalized;
+  return stage !== "middle" ? `${stage}:${baseId}` : baseId;
 }
 
 function updateLocation(view = activeView) {
@@ -132,6 +171,7 @@ function updateLocation(view = activeView) {
 
 function renderStageControls() {
   const config = stageConfig[activeStage];
+  const hasKnowledge = grammarTopics.length > 0;
   document.querySelectorAll("[data-stage]").forEach((button) => {
     button.classList.toggle("active", button.dataset.stage === activeStage);
   });
@@ -142,6 +182,9 @@ function renderStageControls() {
   document.querySelector("#grammarTitle").textContent = config.knowledgeTitle;
   document.querySelector("#vocabLabel").textContent = config.vocabularyLabel;
   document.querySelector("#grammarLabel").textContent = config.knowledgeLabel;
+  document.querySelector('[data-view="grammar"]').hidden = !hasKnowledge;
+  document.querySelector("#grammarTotal").closest("div").hidden = !hasKnowledge;
+  document.querySelector("#introStats").classList.toggle("two-stats", !hasKnowledge);
   document.querySelector("#levelLegend").textContent = config.legend;
   document.querySelector("#wordFilters").innerHTML = config.wordFilters.map(([value, label], index) => (
     `<button class="filter-tab ${index === 0 ? "active" : ""}" type="button" data-word-filter="${value}">${label}</button>`
@@ -149,6 +192,7 @@ function renderStageControls() {
   document.querySelector("#grammarFilters").innerHTML = config.knowledgeFilters.map(([value, label], index) => (
     `<button class="grammar-filter ${index === 0 ? "active" : ""}" type="button" data-grammar-filter="${value}">${label}</button>`
   )).join("");
+  if (!hasKnowledge && activeView === "grammar") switchView("vocabulary", false);
 }
 
 function setStage(stage, updateUrl = true) {
@@ -217,7 +261,9 @@ function updateSummary() {
   document.querySelector("#todayProgressBar").style.width = `${total ? (done / total) * 100 : 0}%`;
   document.querySelector("#todayMessage").textContent = done === total && total > 0
     ? "今天的相遇已经完成，明天会有新的十个词。"
-    : `认识 ${dailyWords.length} 个词，再读懂“${dailyGrammar?.title || "今日知识"}”。`;
+    : dailyGrammar
+      ? `认识 ${dailyWords.length} 个词，再读懂“${dailyGrammar.title}”。`
+      : `认识并复习今天的 ${dailyWords.length} 个词。`;
 }
 
 function getFilteredWords() {
@@ -247,6 +293,8 @@ function wordCard(word) {
   const review = studyState.review.includes(id);
   const saved = studyState.saved.includes(id);
   const level = word.level || "-";
+  const gradeLabel = gradeLabels[word.grade] || "词汇";
+  const stageLabel = level === "-" || level === gradeLabel ? gradeLabel : `${gradeLabel} · ${level}`;
   return `
     <article class="word-card" data-level="${escapeHtml(level)}" data-word-id="${escapeHtml(id)}">
       <div class="word-top">
@@ -260,7 +308,7 @@ function wordCard(word) {
         </div>
       </div>
       <p class="word-meaning">${escapeHtml(word.meaning)}</p>
-      <span class="word-stage">${escapeHtml(gradeLabels[word.grade] || "初中词汇")} · ${escapeHtml(level === "-" ? "课标词" : level)}</span>
+      <span class="word-stage">${escapeHtml(stageLabel)}</span>
       <div class="word-actions">
         <button class="${known ? "active" : ""}" type="button" data-action="known">${known ? "已掌握" : "我认识"}</button>
         <button class="${review ? "active" : ""}" type="button" data-action="review">${review ? "复习中" : "还不熟"}</button>
@@ -294,6 +342,7 @@ function renderReviewWords() {
 
 function switchView(view, updateHash = true) {
   if (!document.querySelector(`[data-panel="${view}"]`)) return;
+  if (view === "grammar" && grammarTopics.length === 0) return;
   activeView = view;
   document.querySelectorAll(".view-tab").forEach((button) => button.classList.toggle("active", button.dataset.view === view));
   document.querySelectorAll(".study-view").forEach((panel) => {

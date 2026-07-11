@@ -170,6 +170,8 @@ main { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 64
   border-bottom: 1px solid var(--line);
 }
 
+.intro-stats.two-stats { grid-template-columns: repeat(2, 1fr); }
+
 .intro-stats div { padding: 24px 8px; text-align: center; }
 .intro-stats div + div { border-left: 1px solid var(--line); }
 .intro-stats dt { font: 700 32px/1 var(--number); font-variant-numeric: tabular-nums; }
@@ -441,8 +443,8 @@ button:disabled { cursor: default; }
   .study-brand strong { font-size: 15px; }
   .study-brand small { display: none; }
   .header-links { gap: 10px; font-size: 11px; }
-  .stage-switcher { width: 100%; margin-top: 20px; }
-  .stage-switcher button { min-width: 0; flex: 1; padding-inline: 10px; }
+  .stage-switcher { width: 100%; margin-top: 20px; overflow-x: auto; }
+  .stage-switcher button { min-width: 56px; flex: 1; padding-inline: 5px; font-size: 13px; }
   .view-tabs { width: 100%; }
   .view-tab { flex: 1; padding-inline: 8px; }
   main { width: min(100% - 28px, 1180px); }

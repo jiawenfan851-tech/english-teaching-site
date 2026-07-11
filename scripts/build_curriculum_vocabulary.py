@@ -307,23 +307,42 @@ def extract_compulsory_words(text: str) -> list[str]:
 
 
 def extract_high_school_words(text: str) -> list[tuple[str, str]]:
-    start = text.rfind("附录 2   词汇表")
-    end = text.index("附录 3   语法项目一览", start)
+    """Extract all 3,000 entries from Appendix 2, preserving course markers."""
+
+    headings = list(re.finditer(r"附录\s*2\s*词汇表", text))
+    if not headings:
+        raise ValueError("Could not find high-school Appendix 2 vocabulary heading")
+    start = headings[-1].end()
+    country_tables = list(re.finditer(r"主要国家名称及相关信息", text[start:]))
+    if not country_tables:
+        raise ValueError("Could not find the end of the high-school vocabulary table")
+    end = start + country_tables[-1].start()
     entries: list[tuple[str, str]] = []
+    seen_i_heading = False
 
     for raw_line in text[start:end].splitlines():
-        for item in re.split(r"\s{2,}", raw_line.strip()):
-            item = item.strip()
-            marker = re.search(r"(\*{1,2})$", item)
-            if not marker or not re.match(r"^[A-Za-z]", item):
+        line = unicodedata.normalize("NFKC", raw_line).strip()
+        line = line.replace("millimetre (millimeter)** monkey", "millimetre (millimeter)**  monkey")
+        for item in re.split(r"\s{2,}", line):
+            item = item.strip().replace("’", "'")
+            if not item or not re.match(r"^[A-Za-z]", item):
                 continue
+            if item == "kilogram)":
+                # Wrapped continuation of "kilo (kilogramme, kilogram)".
+                continue
+            if re.fullmatch(r"[A-Z]", item):
+                if item != "I" or not seen_i_heading:
+                    seen_i_heading = seen_i_heading or item == "I"
+                    continue
+
+            marker = re.search(r"(\*{1,2})$", item)
             canonical = re.sub(r"\*+$", "", item).strip()
-            canonical = re.sub(r"\s*\(.*$", "", canonical).strip()
-            grade = "high2" if marker.group(1) == "**" else "high1"
+            grade = "high2" if marker and marker.group(1) == "**" else "high1" if marker else "high0"
+            canonical = "a / an" if canonical.casefold() == "a (an)" else re.sub(r"\s*\(.*$", "", canonical).strip()
             entries.append((canonical, grade))
 
-    if len(entries) != 1500 or len({word.casefold() for word, _ in entries}) != 1500:
-        raise ValueError("Expected 1500 unique high-school additions")
+    if len(entries) != 3000 or len({word for word, _ in entries}) != 3000:
+        raise ValueError(f"Expected 3000 unique high-school entries, extracted {len(entries)}")
     return entries
 
 
@@ -430,7 +449,14 @@ def main() -> None:
         for word in compulsory_words
     ]
     high_school = [
-        make_entry(word, grade, "必修" if grade == "high1" else "选择性必修", "high", dictionary, existing)
+        make_entry(
+            word,
+            grade,
+            "义务教育基础" if grade == "high0" else "必修" if grade == "high1" else "选择性必修",
+            "high",
+            dictionary,
+            existing,
+        )
         for word, grade in high_school_words
     ]
 
@@ -439,6 +465,7 @@ def main() -> None:
         "compulsoryCount": len(middle_school),
         "middleSchoolNewCount": len(middle_school) - len(primary),
         "highSchoolCount": len(high_school),
+        "highSchoolFoundationCount": sum(item["grade"] == "high0" for item in high_school),
         "highSchoolRequiredCount": sum(item["grade"] == "high1" for item in high_school),
         "highSchoolElectiveCount": sum(item["grade"] == "high2" for item in high_school),
         "generatedFrom": [

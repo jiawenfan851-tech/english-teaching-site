@@ -37,6 +37,8 @@
         <button type="button" data-stage="primary">小学</button>
         <button class="active" type="button" data-stage="middle">初中</button>
         <button type="button" data-stage="high">高中</button>
+        <button type="button" data-stage="postgraduate">考研</button>
+        <button type="button" data-stage="ielts">雅思</button>
       </nav>
 
       <section class="study-intro">
@@ -45,7 +47,7 @@
           <h1 id="stageHeading">初中英语知识库</h1>
           <p id="stageDescription">系统梳理核心词汇与语法，在搜索、练习和复习中逐步掌握。</p>
         </div>
-        <dl class="intro-stats" aria-label="学习内容概览">
+        <dl class="intro-stats" id="introStats" aria-label="学习内容概览">
           <div><dt id="vocabTotal">0</dt><dd id="vocabLabel">阶段单词</dd></div>
           <div><dt id="grammarTotal">0</dt><dd id="grammarLabel">知识主题</dd></div>
           <div><dt id="masteredTotal">0</dt><dd>已经掌握</dd></div>
@@ -159,7 +161,8 @@
 
     <script src="./data/grammar.js"></script>
     <script src="./data/stage-content.js"></script>
-    <script src="./data/curriculum-vocabulary.js"></script>
-    <script src="./learn.js"></script>
+    <script src="./data/curriculum-vocabulary.js?v=20260711"></script>
+    <script src="./data/exam-vocabulary.js?v=20260711"></script>
+    <script src="./learn.js?v=20260711"></script>
   </body>
 </html>
