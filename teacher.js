@@ -222,6 +222,14 @@ $("#exportData").addEventListener("click", () => {
 });
 
 $("#importData").addEventListener("click", () => $("#importFile").click());
+$("#copyBookingEmail").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText("jiawenfan851@gmail.com");
+    showToast("预约邮箱已复制");
+  } catch (_) {
+    window.prompt("预约邮箱", "jiawenfan851@gmail.com");
+  }
+});
 $("#importFile").addEventListener("change", async (event) => {
   const file = event.target.files[0];
   if (!file) return;

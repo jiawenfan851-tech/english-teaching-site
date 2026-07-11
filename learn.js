@@ -22,6 +22,7 @@ const wordCollisionCounts = Object.values(wordSets).flat().reduce((counts, word)
   return counts;
 }, new Map());
 const storageKey = "brightEnglishStudyV1";
+const pronunciationKey = "brightEnglishPronunciationV1";
 const pageSize = 24;
 
 const gradeLabels = {
@@ -114,6 +115,8 @@ let activeGrammarFilter = "all";
 let selectedGrammarId = grammarTopics[0]?.id || "";
 let visibleWordCount = pageSize;
 let currentQuiz = null;
+let pronunciationAccent = localStorage.getItem(pronunciationKey) === "gb" ? "gb" : "us";
+let availableVoices = [];
 
 function loadState() {
   const empty = { known: [], review: [], saved: [], seen: [], grammarDone: [] };
@@ -413,22 +416,64 @@ function renderGrammarLesson() {
   `;
 }
 
-function speakWord(word) {
+function refreshVoices() {
   if (!("speechSynthesis" in window)) return;
+  availableVoices = window.speechSynthesis.getVoices();
+}
+
+function selectVoice(accent) {
+  const config = accent === "gb"
+    ? { lang: "en-GB", preferred: ["Daniel", "Serena", "Kate", "Oliver"] }
+    : { lang: "en-US", preferred: ["Samantha", "Ava", "Alex", "Tom"] };
+  const matching = availableVoices.filter((voice) => voice.lang?.toLowerCase().startsWith(config.lang.toLowerCase()));
+  const localVoices = matching.filter((voice) => voice.localService);
+  const candidates = localVoices.length ? localVoices : matching;
+  return [...candidates].sort((left, right) => {
+    const score = (voice) => {
+      const preferredIndex = config.preferred.findIndex((name) => voice.name.includes(name));
+      return (preferredIndex < 0 ? 0 : 100 - preferredIndex * 10)
+        + (voice.lang?.toLowerCase() === config.lang.toLowerCase() ? 20 : 0)
+        + (voice.localService ? 10 : 0);
+    };
+    return score(right) - score(left);
+  })[0] || null;
+}
+
+function renderPronunciationControl() {
+  document.querySelectorAll("[data-accent]").forEach((button) => {
+    const active = button.dataset.accent === pronunciationAccent;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+}
+
+function speakWord(word, button) {
+  if (!("speechSynthesis" in window)) {
+    button?.setAttribute("title", "当前浏览器不支持语音朗读");
+    return;
+  }
   window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(word);
-  utterance.lang = "en-GB";
-  utterance.rate = 0.86;
+  refreshVoices();
+  const spokenText = String(word).replace(/\s*\/\s*/g, ", ").replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
+  const utterance = new SpeechSynthesisUtterance(spokenText);
+  utterance.lang = pronunciationAccent === "gb" ? "en-GB" : "en-US";
+  utterance.voice = selectVoice(pronunciationAccent);
+  utterance.rate = spokenText.length > 18 ? 0.82 : 0.88;
+  utterance.pitch = 1;
+  const finish = () => button?.classList.remove("speaking");
+  utterance.onstart = () => button?.classList.add("speaking");
+  utterance.onend = finish;
+  utterance.onerror = finish;
   window.speechSynthesis.speak(utterance);
 }
 
-function handleWordAction(card, action) {
+function handleWordAction(card, action, trigger) {
   const id = card.dataset.wordId;
   const word = words.find((item) => wordId(item) === id);
   if (!word) return;
 
   if (action === "speak") {
-    speakWord(word.word);
+    speakWord(word.word, trigger);
     return;
   }
 
@@ -633,9 +678,17 @@ document.querySelector("#quizNext").addEventListener("click", nextQuizQuestion);
 document.querySelectorAll("[data-close-quiz]").forEach((button) => button.addEventListener("click", closeQuiz));
 
 document.addEventListener("click", (event) => {
+  const accentButton = event.target.closest("[data-accent]");
+  if (accentButton) {
+    pronunciationAccent = accentButton.dataset.accent === "gb" ? "gb" : "us";
+    localStorage.setItem(pronunciationKey, pronunciationAccent);
+    window.speechSynthesis?.cancel();
+    renderPronunciationControl();
+  }
+
   const action = event.target.closest("[data-action]");
   const card = action?.closest(".word-card");
-  if (action && card) handleWordAction(card, action.dataset.action);
+  if (action && card) handleWordAction(card, action.dataset.action, action);
 
   const grammarItem = event.target.closest("[data-grammar-id]");
   if (grammarItem) {
@@ -682,6 +735,10 @@ window.addEventListener("hashchange", () => {
   const requested = location.hash.replace("#", "");
   if (["vocabulary", "grammar", "review"].includes(requested)) switchView(requested, false);
 });
+
+refreshVoices();
+if ("speechSynthesis" in window) window.speechSynthesis.addEventListener?.("voiceschanged", refreshVoices);
+renderPronunciationControl();
 
 setStage(activeStage, false);
 const initialView = location.hash.replace("#", "");

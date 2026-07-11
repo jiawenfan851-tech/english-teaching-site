@@ -4,5 +4,3 @@ Disallow: /teacher.html
 Disallow: /student.html
 Disallow: /learn.html
 Disallow: /data/
-
-Sitemap: https://jiawenfan851-tech.github.io/english-teaching-site/sitemap.xml
