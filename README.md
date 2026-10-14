@@ -1,54 +1,98 @@
 # Bright English Studio
 
-中小学英语成长课程网站，包含公开首页、每日一句、预约表单、分学段英语学习馆、学生中心和独立教师管理界面。
+A small website for English lessons and independent study, with vocabulary practice, grammar notes, a student study area, and a teacher workspace. Built with HTML, CSS, and vanilla JavaScript.
 
-## 英语学习馆
+[Visit the site](https://jiawenfan851-tech.github.io/english-teaching-site/) · [Learning library](https://jiawenfan851-tech.github.io/english-teaching-site/learn.html)
 
-- 教育部 2022 年义务教育英语课标二级词汇 505 个，配合自然拼读、基础句型与阅读启蒙
-- 教育部 2022 年义务教育英语课标三级完整词汇 1600 个（含二级 505 词），配合 38 个初中语法主题
-- 教育部 2020 年普通高中英语课标完整词表 3000 个，包含义务教育基础、必修新增 500 词与选择性必修新增 1000 词
-- ECDICT `ky` 标签考研词汇 4801 个
-- ECDICT `ielts` 标签雅思备考词汇 5040 个（不是 IELTS 官方唯一词表）
-- 各学段均支持筛选、搜索、浏览器朗读、收藏、小测与复习记录
+## What it does
 
-内容来源和开放数据许可见 `THIRD_PARTY_NOTICES.md`。
+- Introduces the courses and lets families request a trial lesson.
+- Offers vocabulary search, filters, pronunciation playback, saved words, quizzes, and review history.
+- Provides phonics, sentence patterns, and reading material for primary learners, plus 38 grammar topics for middle school.
+- Gives students a view of their study progress in the current browser.
+- Lets teachers manage lessons, student records, and tasks, with JSON import and export for backups.
 
-`data/curriculum-vocabulary.js` 由 `scripts/build_curriculum_vocabulary.py` 生成。构建脚本从官方课程标准 PDF 的词汇附录提取小学二级 505 词、义务教育三级 1600 词和高中完整 3000 词，并使用 MIT 许可的 ECDICT 补充音标和中文释义；PDF 与完整 ECDICT 数据库不进入网站仓库。
+The learning content is intended for Chinese-speaking students. The interface and Chinese definitions reflect that audience.
 
-`data/exam-vocabulary.js` 由 `scripts/build_exam_vocabulary.py` 从 ECDICT 的 `ky` 与 `ielts` 标签生成。IELTS 官方评价词汇的丰富度、准确性和灵活性，但不发布一份唯一的官方必背词表，因此本站使用“雅思备考词汇”这一名称。
+## Vocabulary coverage
 
-## 学生中心
+| Collection | Entries | Source |
+| --- | ---: | --- |
+| Primary school | 505 | Level 2 vocabulary appendix, China's 2022 compulsory education English curriculum standard |
+| Middle school | 1,600 | Level 3 appendix of the same standard; includes the 505 primary entries |
+| High school | 3,000 | Full vocabulary appendix, China's high school English curriculum standard, revised in 2020 |
+| Postgraduate entrance exam preparation | 4,801 | ECDICT entries tagged `ky` |
+| IELTS preparation | 5,040 | ECDICT entries tagged `ielts` |
 
-学生登录后会进入 `student.html`，可以查看当前浏览器中的学习记录，并进入小学、初中或高中知识库。学生会话保存在 `sessionStorage`，学习进度保存在 `localStorage`。
+Pronunciations and Chinese definitions come mainly from ECDICT. The IELTS collection is a preparation resource, not an official IELTS word list. Source details and the ECDICT license are in [Third-party notices](THIRD_PARTY_NOTICES.md).
 
-学生登录同样属于纯前端访问引导，不是安全的服务器端认证。账号和密码逻辑会随静态文件发送到浏览器，不能用于保护敏感信息或实现多学生数据隔离。
+## Run locally
 
-## 老师登录
+The frontend has no package installation or build step. With Python 3 installed:
 
-登录成功后会跳转到 `teacher.html` 教学工作台。工作台支持：
+```sh
+git clone https://github.com/jiawenfan851-tech/english-teaching-site.git
+cd english-teaching-site
+python3 -m http.server 8000
+```
 
-- 课程安排、学生档案和教学待办管理
-- 自动统计今日课程、在读学生和未完成待办
-- JSON 数据备份与恢复
-- 快速打开 Gmail 中的预约邮件
+Open [localhost:8000](http://localhost:8000). This serves the static pages; it does not start a booking API.
 
-预约不再调用 Formspree 等境外表单接口。当前无境外依赖模式会生成一封包含完整预约信息的邮件，并把内容复制到剪贴板；学生需要在打开的邮件应用中确认发送。部署腾讯云国内接口后，可在表单的 `data-booking-endpoint` 中配置同源 API，实现自动提交。
+## How the site stores data
 
-工作台数据保存在当前浏览器的 `localStorage`，不会自动跨浏览器或设备同步；导入和导出 JSON 仅用于手动备份。老师登录属于纯前端保护，不是安全的服务器端认证，不建议在工作台长期保存敏感个人信息。
+Study progress and teacher workspace records are saved in `localStorage`. They stay in the current browser and do not sync across devices. Teacher records can be exported to JSON and imported again for a manual backup.
 
-真正的一键自动预约需要服务器端接口，静态网页不能安全保存邮箱、短信或云数据库密钥。国内正式版建议使用腾讯云 EdgeOne Pages 或 CloudBase 托管，并通过 Pages Functions/云函数接收预约。
+Student and teacher sessions use `sessionStorage`, with expiry times of 12 and 8 hours respectively. Both login flows run entirely in the browser: their checks are included in the public JavaScript. They guide access to the pages but cannot protect private records or isolate multiple users. A hosted version used for sensitive student information would need server-side authentication and storage.
 
-## GitHub Pages
+## Trial lesson requests
 
-GitHub Pages 是静态托管，不能提供真正的用户认证和数据库。当前预约系统是邮件接收流程，不是数据库预约平台。
+The form reads its API URL from `data-booking-endpoint` in `index.html`, currently set to `./api/booking`. It sends a request there first. If the request fails, or the endpoint is left empty, it prepares an email in the visitor's mail app and attempts to copy the details to the clipboard. The visitor must send that email themselves.
 
-公开地址：
+GitHub Pages serves static files and cannot run the API, so the Pages version relies on the email fallback. The repository also contains two optional booking handlers:
 
-https://jiawenfan851-tech.github.io/english-teaching-site/
+- `node-functions/api/booking.js` for an EdgeOne Pages function.
+- `cloudfunctions/booking/` for a standalone Node.js HTTP service on port 9000.
 
-## 部署记录
+Both handlers currently forward requests to Formspree. Hosting either handler in China does not remove that external delivery dependency. They need a separate deployment before the form can submit automatically.
 
-- 2026-07-10：增加学生中心、小学与高中学习知识库，并优化英文单词与数字字体。
-- 2026-07-10：精简公开页面，移除个人姓名，增加可操作的教学工作台、SEO 文件与会话过期机制。
-- 2026-07-10：增加英语学习馆，并改用跨浏览器兼容性更好的直接预约提交。
-- 2026-07-07：触发一次 GitHub Pages 重新部署。
+## Repository layout
+
+| Path | Purpose |
+| --- | --- |
+| `index.html` | Public homepage, trial lesson form, and login dialogs |
+| `learn.html`, `learn.js`, `learn.css` | Learning library and practice tools |
+| `student.html`, `student.js`, `student.css` | Student study area |
+| `teacher.html`, `teacher.js`, `teacher.css` | Teacher workspace |
+| `auth.js`, `student-auth.js` | Browser-based session checks |
+| `booking.js` | Booking request and email fallback |
+| `data/` | Vocabulary, grammar, and study material |
+| `scripts/` | Vocabulary generation scripts |
+| `.github/workflows/pages.yml` | GitHub Pages deployment |
+
+## Updating the vocabulary
+
+The generated vocabulary files are committed, so they are ready to use without running the scripts. To rebuild them, download the source curriculum PDFs and ECDICT CSV separately. Convert the PDFs to text with `pdftotext -layout`, then run:
+
+```sh
+python3 scripts/build_curriculum_vocabulary.py \
+  --compulsory-text /path/to/compulsory-english-2022.txt \
+  --high-school-text /path/to/high-school-english-2020.txt \
+  --ecdict /path/to/ecdict.csv \
+  --existing-vocabulary data/vocabulary.js \
+  --output data/curriculum-vocabulary.js
+
+python3 scripts/build_exam_vocabulary.py \
+  --ecdict /path/to/ecdict.csv \
+  --output data/exam-vocabulary.js
+```
+
+The source PDFs and full dictionary are not stored in this repository. See [Third-party notices](THIRD_PARTY_NOTICES.md) for source links and attribution.
+
+## Deployment
+
+The GitHub Pages workflow publishes the repository when changes are pushed to `main`. It can also be run manually from the Actions tab. There is no frontend compilation step.
+
+## Project notes
+
+- **July 10, 2026:** Added the student study area, expanded the learning library, and introduced the teacher workspace, search metadata, and session expiry.
+- **July 7, 2026:** Redeployed the site on GitHub Pages.
